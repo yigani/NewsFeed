@@ -1,9 +1,6 @@
 package com.example.NewsFeed.service;
 
-import com.example.NewsFeed.dto.posts.CreatePostsRequestDto;
-import com.example.NewsFeed.dto.posts.CreatePostsResponseDto;
-import com.example.NewsFeed.dto.posts.FindByIdPostsResponseDto;
-import com.example.NewsFeed.dto.posts.UpdatePostsResponseDto;
+import com.example.NewsFeed.dto.posts.*;
 import com.example.NewsFeed.entity.Posts;
 import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.repository.PostsRepository;
@@ -40,13 +37,24 @@ public class PostsServiceImpl implements PostsService {
     }
 
     @Override
-    public UpdatePostsResponseDto updateById(Long id) {
-
-        return null;
+    public UpdatePostsResponseDto updateById(UpdatePostsRequestDto updatePostsRequestDto, Long id) {
+        // id에 맞는 posts 조회
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
+        // 조회한 posts에 requestDto 저장
+        Posts updatePosts = postsRepository.save(posts);
+        // 반환할 dto로 변환
+        UpdatePostsResponseDto updatePostsResponseDto = new UpdatePostsResponseDto(updatePosts);
+        return updatePostsResponseDto;
     }
 
     @Override
     public void deleteById(Long id) {
-
+        // postsRepository에 id가 없다면 예외처리
+        if(!postsRepository.existsById(id)) {
+            throw new EntityNotFoundException("게시글을 찾을 수 없습니다.");
+        }
+        // postsRepository에서 id가 있는 행을 삭제
+        postsRepository.deleteById(id);
     }
 }
