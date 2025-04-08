@@ -1,4 +1,4 @@
 package com.example.NewsFeed.service;
 
-public class UsersServiceImpl {
+public class UsersServiceImpl implements UsersService {
 }

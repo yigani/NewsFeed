@@ -1,4 +1,7 @@
 package com.example.NewsFeed.repository;
 
-public interface FollowsRepository {
+import com.example.NewsFeed.entity.Follows;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface FollowsRepository extends JpaRepository<Follows, Long> {
 }
