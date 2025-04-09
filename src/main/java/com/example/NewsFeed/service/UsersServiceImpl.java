@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService{
@@ -29,9 +31,11 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Override
-    public CreateProfileResponseDto createProfile(CreateProfileRequestDto dto) {
+    public CreateProfileResponseDto createProfile(Long id, CreateProfileRequestDto dto) {
 
-        Profiles savedProfile = new Profiles(dto);
+        Users findUser = usersRepository.findUsersByIdOrElseThrow(id);
+
+        Profiles savedProfile = new Profiles(findUser, dto);
         profilesRepository.save(savedProfile);
 
         return new CreateProfileResponseDto(savedProfile);

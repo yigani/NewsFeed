@@ -35,10 +35,11 @@ public class Profiles {
 
     private LocalDate birthday;
 
-    public Profiles(CreateProfileRequestDto dto) {
+    public Profiles(Users users, CreateProfileRequestDto dto) {
         this.gender = dto.getGender();
         this.introduction = dto.getIntroduction();
         this.image = dto.getImage();
         this.birthday = dto.getBirthday();
+        this.userId = users;
     }
 }
