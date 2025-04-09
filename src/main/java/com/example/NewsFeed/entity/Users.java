@@ -1,6 +1,7 @@
 package com.example.NewsFeed.entity;
 
 import com.example.NewsFeed.dto.users.SignUpUserRequestDto;
+import com.example.NewsFeed.dto.users.UpdatePasswordRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -37,5 +38,9 @@ public class Users extends BaseEntity{
         this.password = dto.getPassword();
         this.userName = dto.getUsername();
         this.isDelete = false;
+    }
+
+    public void updatePassword(UpdatePasswordRequestDto dto) {
+        this.password = dto.getNewPassword();
     }
 }

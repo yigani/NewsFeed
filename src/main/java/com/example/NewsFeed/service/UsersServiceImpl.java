@@ -1,16 +1,16 @@
 package com.example.NewsFeed.service;
 
 import com.example.NewsFeed.dto.posts.P;
-import com.example.NewsFeed.dto.users.CreateProfileRequestDto;
-import com.example.NewsFeed.dto.users.CreateProfileResponseDto;
-import com.example.NewsFeed.dto.users.SignUpUserRequestDto;
-import com.example.NewsFeed.dto.users.SignUpUserResponseDto;
+import com.example.NewsFeed.dto.users.*;
 import com.example.NewsFeed.entity.Profiles;
 import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.repository.ProfilesRepository;
 import com.example.NewsFeed.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +36,19 @@ public class UsersServiceImpl implements UsersService{
         profilesRepository.save(savedprofile);
 
         return new CreateProfileResponseDto(savedprofile);
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(Long id, UpdatePasswordRequestDto dto) {
+
+        Users findUser = usersRepository.findUsersByIdOrElseThrow(id);
+
+        if(!findUser.getPassword().equals(dto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        findUser.updatePassword(dto);
+
     }
 }
