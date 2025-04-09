@@ -1,5 +1,6 @@
 package com.example.NewsFeed.entity;
 
+import com.example.NewsFeed.dto.users.CreateProfileRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,11 @@ public class Profiles {
     private String image;
 
     private LocalDate birthday;
+
+    public Profiles(CreateProfileRequestDto dto) {
+        this.gender = dto.getGender();
+        this.introduction = dto.getIntroduction();
+        this.image = dto.getImage();
+        this.birthday = dto.getBirthday();
+    }
 }
