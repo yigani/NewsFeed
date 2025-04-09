@@ -1,7 +1,9 @@
 package com.example.NewsFeed.entity;
 
+import com.example.NewsFeed.dto.posts.CreatePostsRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,9 +22,16 @@ public class Posts extends BaseEntity{
     private Users userId;
 
     @NotNull
+    @Size(min = 1, max = 30)
     private String title;
 
     @NotNull
+    @Size(min = 1, max = 100)
     private String contents;
 
+    public Posts(CreatePostsRequestDto createPostsRequestDto, Users users) {
+        this.userId = users;
+        this.title = createPostsRequestDto.getTitle();
+        this.contents = createPostsRequestDto.getContents();
+    }
 }
