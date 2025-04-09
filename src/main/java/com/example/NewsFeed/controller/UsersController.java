@@ -3,6 +3,7 @@ package com.example.NewsFeed.controller;
 import com.example.NewsFeed.dto.users.UserInfoResponseDto;
 import com.example.NewsFeed.dto.users.UserResponseDto;
 import com.example.NewsFeed.dto.users.UserSearchResponseDto;
+import com.example.NewsFeed.repository.ProfilesRepository;
 import com.example.NewsFeed.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
@@ -18,30 +19,37 @@ import java.util.List;
 public class UsersController {
 
     private final UsersService usersService;
+    private final ProfilesRepository profilesRepository;
 
     // 로그인 유저 정보 조회
     @GetMapping("/info/me")
-    public ResponseEntity<UserResponseDto> myUserInfo(@RequestParam Long id){
+    public ResponseEntity<UserResponseDto> myUserInfo(@RequestParam Long id) {
         UserResponseDto userResponseDto = usersService.myUserInfo(id);
-        return new ResponseEntity<>(userResponseDto,HttpStatus.OK);
+        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
     // 특정 유저 이름 조회
     @GetMapping("/info/{id}")
-    public ResponseEntity<UserInfoResponseDto> userInfo(@PathVariable Long id){
+    public ResponseEntity<UserInfoResponseDto> userInfo(@PathVariable Long id) {
         UserInfoResponseDto userInfoResponseDto = usersService.userInfo(id);
-        return new ResponseEntity<>(userInfoResponseDto,HttpStatus.OK);
+        return new ResponseEntity<>(userInfoResponseDto, HttpStatus.OK);
     }
 
     //유저 검색
     @GetMapping
-    public ResponseEntity<List<UserSearchResponseDto>> searchUser(@RequestParam("search") String name){
+    public ResponseEntity<List<UserSearchResponseDto>> searchUser(@RequestParam("search") String name) {
 
         List<UserSearchResponseDto> searchUser = usersService.searchUser(name);
 
-        return new ResponseEntity<>(searchUser,HttpStatus.OK);
+        return new ResponseEntity<>(searchUser, HttpStatus.OK);
     }
 
+    //프로필 조회
+    @GetMapping("/{id}/profile")
+    public ResponseEntity<UserProfileResponseDto> userProfile(@PathVariable Long id){
+        profilesRepository.findByUserId(id);
+        return ResponseEntity<>(,HttpStatus.OK);
+    }
 
 
 }
