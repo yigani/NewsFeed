@@ -1,10 +1,8 @@
 package com.example.NewsFeed.service;
 
-import com.example.NewsFeed.dto.users.ProfileResponseDto;
 import com.example.NewsFeed.dto.users.UserInfoResponseDto;
 import com.example.NewsFeed.dto.users.UserResponseDto;
 import com.example.NewsFeed.dto.users.UserSearchResponseDto;
-import com.example.NewsFeed.entity.Profiles;
 import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.repository.ProfilesRepository;
 import com.example.NewsFeed.repository.UsersRepository;

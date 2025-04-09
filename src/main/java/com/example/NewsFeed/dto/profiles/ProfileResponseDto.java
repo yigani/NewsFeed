@@ -1,4 +1,4 @@
-package com.example.NewsFeed.dto.users;
+package com.example.NewsFeed.dto.profiles;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

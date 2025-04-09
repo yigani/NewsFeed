@@ -1,9 +1,11 @@
 package com.example.NewsFeed.controller;
 
+import com.example.NewsFeed.dto.profiles.ProfileResponseDto;
 import com.example.NewsFeed.dto.users.UserInfoResponseDto;
 import com.example.NewsFeed.dto.users.UserResponseDto;
 import com.example.NewsFeed.dto.users.UserSearchResponseDto;
 import com.example.NewsFeed.repository.ProfilesRepository;
+import com.example.NewsFeed.service.ProfileService;
 import com.example.NewsFeed.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
@@ -20,6 +22,7 @@ public class UsersController {
 
     private final UsersService usersService;
     private final ProfilesRepository profilesRepository;
+    private final ProfileService profileService;
 
     // 로그인 유저 정보 조회
     @GetMapping("/info/me")
@@ -46,9 +49,9 @@ public class UsersController {
 
     //프로필 조회
     @GetMapping("/{id}/profile")
-    public ResponseEntity<UserProfileResponseDto> userProfile(@PathVariable Long id){
-        profilesRepository.findByUserId(id);
-        return ResponseEntity<>(,HttpStatus.OK);
+    public ResponseEntity<ProfileResponseDto> userProfile(@PathVariable Long id){
+        ProfileResponseDto profileResponseDto = profileService.userProfile(id);
+        return new ResponseEntity<>(profileResponseDto,HttpStatus.OK);
     }
 
 
