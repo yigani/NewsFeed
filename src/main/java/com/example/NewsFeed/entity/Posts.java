@@ -1,5 +1,6 @@
 package com.example.NewsFeed.entity;
 
+import com.example.NewsFeed.dto.posts.CreatePostsRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -25,4 +26,9 @@ public class Posts extends BaseEntity{
     @NotNull
     private String contents;
 
+    public Posts(CreatePostsRequestDto createPostsRequestDto, Users users) {
+        this.userId = users;
+        this.title = createPostsRequestDto.getTitle();
+        this.contents = createPostsRequestDto.getContents();
+    }
 }
