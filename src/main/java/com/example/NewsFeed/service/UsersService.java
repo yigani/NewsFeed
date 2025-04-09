@@ -10,7 +10,6 @@ public interface UsersService {
 
     void updatePassword(Long id, UpdatePasswordRequestDto dto);
 
-
-    // 회원 탈퇴
+    DeactivateUserResponseDto deactivateUser(Long id, DeactivateUserRequestDto dto);
 
 }

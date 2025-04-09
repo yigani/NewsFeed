@@ -1,7 +1,6 @@
 package com.example.NewsFeed.controller;
 
 import com.example.NewsFeed.dto.users.*;
-import com.example.NewsFeed.service.S;
 import com.example.NewsFeed.service.UsersServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,6 @@ public class UsersController {
         CreateProfileResponseDto createdProfile = usersService.createProfile(dto);
 
         return new ResponseEntity<>(createdProfile, HttpStatus.CREATED);
-
     }
 
     // 비밀번호 변경
@@ -44,6 +42,12 @@ public class UsersController {
     }
 
     // 회원 탈퇴
+    @PatchMapping("/me/status")
+    public ResponseEntity<DeactivateUserResponseDto> deactivateUser(@RequestParam Long id, @RequestBody DeactivateUserRequestDto dto) {
 
+        DeactivateUserResponseDto deactivateUserResponseDto = usersService.deactivateUser(id, dto);
+
+        return new ResponseEntity<>(deactivateUserResponseDto, HttpStatus.OK);
+    }
 
 }

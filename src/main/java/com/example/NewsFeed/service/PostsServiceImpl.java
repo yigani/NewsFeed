@@ -7,8 +7,9 @@ import com.example.NewsFeed.repository.PostsRepository;
 import com.example.NewsFeed.repository.UsersRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-
+@Service
 @RequiredArgsConstructor
 public class PostsServiceImpl implements PostsService {
 

@@ -1,6 +1,5 @@
 package com.example.NewsFeed.service;
 
-import com.example.NewsFeed.dto.posts.P;
 import com.example.NewsFeed.dto.users.*;
 import com.example.NewsFeed.entity.Profiles;
 import com.example.NewsFeed.entity.Users;
@@ -23,19 +22,19 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public SignUpUserResponseDto signUp(SignUpUserRequestDto dto) {
 
-        Users saveduser = new Users(dto);
-        usersRepository.save(saveduser);
+        Users savedUser = new Users(dto);
+        usersRepository.save(savedUser);
 
-        return new SignUpUserResponseDto(saveduser);
+        return new SignUpUserResponseDto(savedUser);
     }
 
     @Override
     public CreateProfileResponseDto createProfile(CreateProfileRequestDto dto) {
 
-        Profiles savedprofile = new Profiles(dto);
-        profilesRepository.save(savedprofile);
+        Profiles savedProfile = new Profiles(dto);
+        profilesRepository.save(savedProfile);
 
-        return new CreateProfileResponseDto(savedprofile);
+        return new CreateProfileResponseDto(savedProfile);
     }
 
     @Override
@@ -51,4 +50,20 @@ public class UsersServiceImpl implements UsersService{
         findUser.updatePassword(dto);
 
     }
+
+    @Override
+    @Transactional
+    public DeactivateUserResponseDto deactivateUser(Long id, DeactivateUserRequestDto dto) {
+
+        Users findUser = usersRepository.findUsersByIdOrElseThrow(id);
+
+        if(!findUser.getPassword().equals(dto.getPassword())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        findUser.deactivateUser();
+
+        return new DeactivateUserResponseDto(findUser);
+    }
+
 }
