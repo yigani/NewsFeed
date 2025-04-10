@@ -1,16 +1,10 @@
 package com.example.NewsFeed.controller;
 
-import com.example.NewsFeed.dto.profiles.MyProfileUpdateRequestDto;
-import com.example.NewsFeed.dto.profiles.MyProfileUpdateResponseDto;
-import com.example.NewsFeed.dto.profiles.ProfileResponseDto;
 import com.example.NewsFeed.dto.users.UserInfoResponseDto;
 import com.example.NewsFeed.dto.users.UserResponseDto;
 import com.example.NewsFeed.dto.users.UserSearchResponseDto;
-import com.example.NewsFeed.repository.ProfilesRepository;
-import com.example.NewsFeed.service.ProfileService;
 import com.example.NewsFeed.service.UsersService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
