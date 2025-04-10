@@ -1,12 +1,8 @@
 package com.example.NewsFeed.controller;
 
 import com.example.NewsFeed.dto.users.*;
-import com.example.NewsFeed.service.UsersServiceImpl;
-import jakarta.validation.Valid;
-import com.example.NewsFeed.dto.users.UserInfoResponseDto;
-import com.example.NewsFeed.dto.users.UserResponseDto;
-import com.example.NewsFeed.dto.users.UserSearchResponseDto;
 import com.example.NewsFeed.service.UsersService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsersController {
 
-    private final UsersServiceImpl usersService;
+    private final UsersService usersService;
 
     /**
      * 회원 가입(유저 생성)
@@ -65,8 +61,6 @@ public class UsersController {
         return new ResponseEntity<>(deactivateUserResponseDto, HttpStatus.OK);
     }
 
-
-    private final UsersService usersService;
 
 
     // TODO 로그인 구현 후 수정 필요

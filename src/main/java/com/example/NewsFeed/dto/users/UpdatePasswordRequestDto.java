@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class UpdatePasswordRequestDto {
+
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Size(max = 100, message = "비밀번호는 30글자 이하로 입력해주세요.")
     private final String password;
