@@ -20,7 +20,6 @@ public class PostsController {
     // TODO 로그인 이후에 @SessionAttribute () 내부의 Users 수정
     @PostMapping
     public ResponseEntity<CreatePostsResponseDto> createPost(@RequestBody CreatePostsRequestDto createPostsRequestDto, @SessionAttribute(name = "Users") Users users) {
-        // Service
         CreatePostsResponseDto createPostsResponseDto = postsService.create(createPostsRequestDto, users);
         return new ResponseEntity<>(createPostsResponseDto, HttpStatus.OK);
     }
