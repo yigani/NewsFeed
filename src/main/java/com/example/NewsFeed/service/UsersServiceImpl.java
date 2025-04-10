@@ -47,6 +47,10 @@ public class UsersServiceImpl implements UsersService{
 
         Users findUser = usersRepository.findUsersByIdOrElseThrow(id);
 
+        if(dto.getPassword().equals(dto.getNewPassword())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
         if(!findUser.getPassword().equals(dto.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }

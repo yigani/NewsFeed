@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 public class Users extends BaseEntity{
 
-    //Todo id랑 email은 final붙여야 하지 않을까요!?
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
