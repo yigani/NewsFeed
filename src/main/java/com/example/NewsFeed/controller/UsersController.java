@@ -1,5 +1,7 @@
 package com.example.NewsFeed.controller;
 
+import com.example.NewsFeed.dto.profiles.MyProfileUpdateRequestDto;
+import com.example.NewsFeed.dto.profiles.MyProfileUpdateResponseDto;
 import com.example.NewsFeed.dto.profiles.ProfileResponseDto;
 import com.example.NewsFeed.dto.users.UserInfoResponseDto;
 import com.example.NewsFeed.dto.users.UserResponseDto;
@@ -21,8 +23,7 @@ import java.util.List;
 public class UsersController {
 
     private final UsersService usersService;
-    private final ProfilesRepository profilesRepository;
-    private final ProfileService profileService;
+
 
     // 로그인 유저 정보 조회
     @GetMapping("/info/me")
@@ -46,13 +47,5 @@ public class UsersController {
 
         return new ResponseEntity<>(searchUser, HttpStatus.OK);
     }
-
-    //프로필 조회
-    @GetMapping("/{id}/profile")
-    public ResponseEntity<ProfileResponseDto> userProfile(@PathVariable Long id){
-        ProfileResponseDto profileResponseDto = profileService.userProfile(id);
-        return new ResponseEntity<>(profileResponseDto,HttpStatus.OK);
-    }
-
 
 }

@@ -32,4 +32,8 @@ public class Users extends BaseEntity{
     @NotNull
     private boolean isDelete;
 
+    public void updateUserName(String userName){
+        this.userName = userName;
+    }
+
 }

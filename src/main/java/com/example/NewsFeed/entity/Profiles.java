@@ -33,4 +33,13 @@ public class Profiles {
     private String image;
 
     private LocalDate birthday;
+
+    public void updateProfile(String gender,String introduction,String image, LocalDate birthday){
+
+        this.gender = gender;
+        this.introduction = introduction;
+        this.image = image;
+        this.birthday = birthday;
+
+    }
 }
