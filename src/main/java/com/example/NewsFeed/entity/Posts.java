@@ -2,39 +2,36 @@ package com.example.NewsFeed.entity;
 
 import com.example.NewsFeed.dto.posts.CreatePostsRequestDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity
 @Getter
-@Setter
+@Entity
 @NoArgsConstructor
-public class Posts {
+@Table(name = "posts")
+public class Posts extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users userId;
+
+    @NotNull
+    @Size(min = 1, max = 30)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @NotNull
+    @Size(min = 1, max = 100)
     private String contents;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private Users user;
-
-    // 생성자: CreatePostsRequestDto 기반
-    public Posts(CreatePostsRequestDto dto, Users user) {
-        this.title = dto.getTitle();
-        this.contents = dto.getContents();
-        this.user = user;
-    }
-
-    // 수정 편의 메서드
-    public void update(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+    public Posts(CreatePostsRequestDto createPostsRequestDto, Users users) {
+        this.userId = users;
+        this.title = createPostsRequestDto.getTitle();
+        this.contents = createPostsRequestDto.getContents();
     }
 }

@@ -2,15 +2,12 @@ package com.example.NewsFeed.service;
 
 import com.example.NewsFeed.dto.posts.*;
 import com.example.NewsFeed.entity.Users;
+import org.springframework.stereotype.Service;
 
-
-import java.util.List;
-
+@Service
 public interface PostsService {
-    CreatePostsResponseDto create(CreatePostsRequestDto dto, Users user);
-    FindByIdPostsResponseDto findById(Long postId);
-    UpdatePostsResponseDto updateById(UpdatePostsRequestDto dto, Long postId);
-    void deleteById(Long postId);
-    List<FindByIdPostsResponseDto> findAllByUser(Long userId);
-    List<FindByIdPostsResponseDto> findAll();
+    CreatePostsResponseDto create(CreatePostsRequestDto createPostsRequestDto, Users users);
+    FindByIdPostsResponseDto findById(Long id);
+    UpdatePostsResponseDto updateById(UpdatePostsRequestDto updatePostsRequestDto, Long id);
+    void deleteById(Long id);
 }
