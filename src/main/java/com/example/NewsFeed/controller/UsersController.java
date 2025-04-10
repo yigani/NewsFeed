@@ -19,7 +19,7 @@ public class UsersController {
     private final UsersService usersService;
 
 
-    // 로그인 유저 정보 조회
+    // TODO 로그인 구현 후 수정 필요
     @GetMapping("/info/me")
     public ResponseEntity<UserResponseDto> myUserInfo(@RequestParam Long id) {
         UserResponseDto userResponseDto = usersService.myUserInfo(id);

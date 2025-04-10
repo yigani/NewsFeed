@@ -23,6 +23,7 @@ public class ProfilesController {
         return new ResponseEntity<>(profileResponseDto, HttpStatus.OK);
     }
 
+    // TODO 로그인 구현 후 수정 필요
     //내 프로필 수정
     //테스트를 위해 PathVariable로 아이디 값을 넣어서 확인
     //로그인 구현시 userId부분 "/me"로 수정필요
