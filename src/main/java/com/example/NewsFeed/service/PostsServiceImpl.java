@@ -19,10 +19,9 @@ public class PostsServiceImpl implements PostsService {
     // userId를 참조하여 게시글 생성
     @Override
     public CreatePostsResponseDto create(CreatePostsRequestDto createPostsRequestDto, Users users) {
-        // requestDto와 필드값 user 입력
         Posts posts = new Posts(createPostsRequestDto, users);
-        Posts savedPosts = postsRepository.save(posts);
-        return new CreatePostsResponseDto(savedPosts);
+        Posts savedPosts = postsRepository.save(posts); // ✅ 저장
+        return new CreatePostsResponseDto(savedPosts);  // 저장된 객체로 응답
     }
 
     // id로 게시글을 단건 조회
@@ -32,7 +31,7 @@ public class PostsServiceImpl implements PostsService {
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
         // 게시글의 userId를 기준으로 user 조회
-        Users users = usersRepository.findById(posts.getId())
+        Users users = usersRepository.findById(posts.getUser().getId())
                 .orElseThrow(() -> new EntityNotFoundException("게시글 작성자를 찾을 수 없습니다."));
         // 반환할 dto로 변환
         FindByIdPostsResponseDto findByIdPostsResponseDto = new FindByIdPostsResponseDto(posts, users.getUserName());

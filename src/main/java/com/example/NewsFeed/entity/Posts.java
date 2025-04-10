@@ -17,20 +17,20 @@ public class Posts extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Users userId;
-
-    @NotNull
     private String title;
 
     @NotNull
     private String contents;
 
-    public Posts(CreatePostsRequestDto createPostsRequestDto, Users users) {
-        this.userId = users;
-        this.title = createPostsRequestDto.getTitle();
-        this.contents = createPostsRequestDto.getContents();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users user;
+
+    // 생성자: CreatePostsRequestDto 기반
+    public Posts(CreatePostsRequestDto dto, Users user) {
+        this.title = dto.getTitle();
+        this.contents = dto.getContents();
+        this.user = user;
     }
 
     public void update(UpdatePostsRequestDto updatePostsRequestDto) {
