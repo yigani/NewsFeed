@@ -22,11 +22,13 @@ public class Posts extends BaseEntity{
     private Users userId;
 
     @NotNull
-    @Size(min = 1, max = 30)
+    @Size(max = 30)
+    @Column(nullable = false, length = 30)
     private String title;
 
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
+    @Column(nullable = false, length = 100)
     private String contents;
 
     public Posts(CreatePostsRequestDto createPostsRequestDto, Users users) {

@@ -20,18 +20,20 @@ public class Users extends BaseEntity{
     private Long id;
 
     @NotBlank
-    @Column(unique = true)
+    @Size(max = 50)
+    @Column(unique = true, nullable = false, length = 50)
     private String email;
 
     @NotBlank
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
+    @Column(nullable = false, length = 100)
     private String password;
 
     @NotBlank
-    @Size(min = 1, max = 30)
+    @Size(max = 30)
+    @Column(nullable = false, length = 30)
     private String userName;
 
-    @NotNull
     private boolean isDelete;
 
     public Users(SignUpUserRequestDto dto) {
