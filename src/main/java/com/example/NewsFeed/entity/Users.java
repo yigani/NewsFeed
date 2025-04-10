@@ -51,4 +51,8 @@ public class Users extends BaseEntity{
         this.isDelete = true;
     }
 
+    public void updateUserName(String userName){
+        this.userName = userName;
+    }
+
 }

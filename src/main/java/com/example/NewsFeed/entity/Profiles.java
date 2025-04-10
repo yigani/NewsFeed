@@ -37,12 +37,21 @@ public class Profiles {
     private String image;
 
     private LocalDate birthday;
-
+    
     public Profiles(Users users, CreateProfileRequestDto dto) {
         this.gender = dto.getGender();
         this.introduction = dto.getIntroduction();
         this.image = dto.getImage();
         this.birthday = dto.getBirthday();
         this.userId = users;
+    }
+
+    public void updateProfile(String gender,String introduction,String image, LocalDate birthday){
+
+        this.gender = gender;
+        this.introduction = introduction;
+        this.image = image;
+        this.birthday = birthday;
+
     }
 }
