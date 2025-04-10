@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 public class FindByIdPostsResponseDto {
 
     private Long id;
+
+    // TODO 이거 카멜 케이스 해야하는지 여부
     private String username;
     private String title;
     private String contents;

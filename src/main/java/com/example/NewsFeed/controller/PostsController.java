@@ -47,7 +47,8 @@ public class PostsController {
     // 게시글 id로 게시글 단건 조회
     @GetMapping("/{postId}")
     public ResponseEntity<FindByIdPostsResponseDto> findPostById(@PathVariable Long postId) {
-        return ResponseEntity.ok(postsService.findById(postId));
+        FindByIdPostsResponseDto findByIdPostsResponseDto = postsService.findById(postId);
+        return new ResponseEntity<>(findByIdPostsResponseDto, HttpStatus.OK);
     }
 
     // TODO 인증 인가 필요 / 로그인된 유저 게시글 중 원하는 게시글 id를 기준으로 게시글 수정으로 변경
