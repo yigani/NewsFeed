@@ -2,7 +2,9 @@ package com.example.NewsFeed.controller;
 
 import com.example.NewsFeed.dto.posts.*;
 import com.example.NewsFeed.entity.Users;
+import com.example.NewsFeed.repository.UsersRepository;
 import com.example.NewsFeed.service.PostsService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -21,8 +23,14 @@ public class PostsController {
     private final UsersRepository usersRepository; //  테스트용 사용자 불러오기
 
     @PostMapping
-    public ResponseEntity<CreatePostsResponseDto> createPost(@RequestBody CreatePostsRequestDto createPostsRequestDto, @SessionAttribute(name = "Users") Users users) {
-        CreatePostsResponseDto createPostsResponseDto = postsService.create(createPostsRequestDto, users);
+//    public ResponseEntity<CreatePostsResponseDto> createPost(@RequestBody CreatePostsRequestDto createPostsRequestDto, @SessionAttribute(name = "Users") Users users) {
+    public ResponseEntity<CreatePostsResponseDto> createPost(@RequestBody CreatePostsRequestDto createPostsRequestDto) {
+        Users testUsers = usersRepository.findById(1L)
+                .orElseThrow(() -> new EntityNotFoundException("유저가 없습니다"));
+
+        // testUsers로 입력중
+        CreatePostsResponseDto createPostsResponseDto = postsService.create(createPostsRequestDto, testUsers);
+
         return new ResponseEntity<>(createPostsResponseDto, HttpStatus.OK);
     }
 
