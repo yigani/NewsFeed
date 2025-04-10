@@ -25,9 +25,14 @@ public class FollowsController {
 
     @GetMapping("/{userId}/following")
     public ResponseEntity<List<String>> followingList(@PathVariable Long userId){
-        List<String> followingNameList = followsService.followUserNames(userId);
+        List<String> followingNameList = followsService.followingUserNames(userId);
         return new ResponseEntity<>(followingNameList,HttpStatus.OK);
     }
 
+    @GetMapping("/{userId}/follower")
+    public ResponseEntity<List<String>> followerList(@PathVariable Long userId){
+        List<String> followerNameList = followsService.followerUserNames(userId);
+        return new ResponseEntity<>(followerNameList,HttpStatus.OK);
+    }
 
 }

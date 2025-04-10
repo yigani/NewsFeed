@@ -22,20 +22,37 @@ public class FollowsServiceImpl implements FollowsService{
     }
 
     @Override
-    public List<String> followUserNames(Long userId) {
+    public List<String> followingUserNames(Long userId) {
 
         Users user = usersRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("팔로잉한 유저가 없습니다."));
+
+        List<Follows> following = followsRepository.findByFollowing(user);
+        List<String> followingUserName = new ArrayList<>();
+
+        for (Follows follow : following){
+            //
+            Users followingUser = follow.getFollowing();
+            followingUserName.add(followingUser.getUserName());
+        }
+
+        return followingUserName;
+    }
+
+    //수정필요
+    @Override
+    public List<String> followerUserNames(Long userId) {
+
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("팔로워한 유저가 없습니다."));
 
         List<Follows> follower = followsRepository.findByFollower(user);
         List<String> followerUserName = new ArrayList<>();
 
         for (Follows follow : follower){
-            //
-            Users followingUser = follow.getFollowing();
-            followerUserName.add(followingUser.getUserName());
+            Users followergUser = follow.getFollower();
+            followerUserName.add(followergUser.getUserName());
         }
-
         return followerUserName;
     }
 }

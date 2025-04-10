@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface FollowsService {
 
-    List<String> followUserNames(Long userId);
+    List<String> followingUserNames(Long userId);
+
+    List<String> followerUserNames(Long userId);
 
 }
