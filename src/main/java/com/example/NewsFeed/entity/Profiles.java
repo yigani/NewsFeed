@@ -1,5 +1,6 @@
 package com.example.NewsFeed.entity;
 
+import com.example.NewsFeed.dto.users.CreateProfileRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -35,6 +36,15 @@ public class Profiles {
     @Column
     private String image;
 
+    private LocalDate birthday;
+
+    public Profiles(Users users, CreateProfileRequestDto dto) {
+        this.gender = dto.getGender();
+        this.introduction = dto.getIntroduction();
+        this.image = dto.getImage();
+        this.birthday = dto.getBirthday();
+        this.userId = users;
+    }
     private LocalDate birthday;
 
     public void updateProfile(String gender,String introduction,String image, LocalDate birthday){
