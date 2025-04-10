@@ -18,25 +18,31 @@ public class PostsController {
     }
 
     // TODO 로그인 이후에 @SessionAttribute () 내부의 Users 수정
+    // 유저 id를 참조하여 게시글 작성
     @PostMapping
     public ResponseEntity<CreatePostsResponseDto> createPost(@RequestBody CreatePostsRequestDto createPostsRequestDto, @SessionAttribute(name = "Users") Users users) {
         CreatePostsResponseDto createPostsResponseDto = postsService.create(createPostsRequestDto, users);
         return new ResponseEntity<>(createPostsResponseDto, HttpStatus.OK);
     }
 
+    // 게시글 id로 게시글 단건 조회
     @GetMapping("/{postId}")
     public ResponseEntity<FindByIdPostsResponseDto> findPostById(@PathVariable Long postId) {
         FindByIdPostsResponseDto findByIdPostsResponseDto = postsService.findById(postId);
         return new ResponseEntity<>(findByIdPostsResponseDto, HttpStatus.OK);
     }
 
-    @PatchMapping("/postId")
+    // TODO 인증 인가 필요 / 로그인된 유저 게시글 중 원하는 게시글 id를 기준으로 게시글 수정으로 변경
+    // 게시글 id로 게시글을 찾아서 게시글을 수정
+    @PatchMapping("/{postId}")
     public ResponseEntity<UpdatePostsResponseDto> updatePostById(@RequestBody UpdatePostsRequestDto updatePostsRequestDto, @PathVariable Long postId) {
         UpdatePostsResponseDto updatePostsResponseDto = postsService.updateById(updatePostsRequestDto, postId);
         return new ResponseEntity<>(updatePostsResponseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/postId")
+    // TODO 인증 인가 필요 / 로그인된 유저 게시글 중 ID로 찾아서 삭제
+    // 게시글 id로 게시글을 찾아서 삭제
+    @DeleteMapping("/{postId}")
     public void deletePostById(@PathVariable Long postId) {
         postsService.deleteById(postId);
     }

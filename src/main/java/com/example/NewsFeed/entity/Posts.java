@@ -1,6 +1,7 @@
 package com.example.NewsFeed.entity;
 
 import com.example.NewsFeed.dto.posts.CreatePostsRequestDto;
+import com.example.NewsFeed.dto.posts.UpdatePostsRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -30,5 +31,10 @@ public class Posts extends BaseEntity{
         this.userId = users;
         this.title = createPostsRequestDto.getTitle();
         this.contents = createPostsRequestDto.getContents();
+    }
+
+    public void update(UpdatePostsRequestDto updatePostsRequestDto) {
+        this.title = updatePostsRequestDto.getTitle();
+        this.contents = updatePostsRequestDto.getContents();
     }
 }

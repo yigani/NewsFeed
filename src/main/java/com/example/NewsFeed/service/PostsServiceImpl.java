@@ -7,22 +7,25 @@ import com.example.NewsFeed.repository.PostsRepository;
 import com.example.NewsFeed.repository.UsersRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-
+@Service
 @RequiredArgsConstructor
 public class PostsServiceImpl implements PostsService {
 
     private final PostsRepository postsRepository;
     private final UsersRepository usersRepository;
 
+    // userId를 참조하여 게시글 생성
     @Override
     public CreatePostsResponseDto create(CreatePostsRequestDto createPostsRequestDto, Users users) {
         // requestDto와 필드값 user 입력
         Posts posts = new Posts(createPostsRequestDto, users);
-        CreatePostsResponseDto createPostsResponseDto = new CreatePostsResponseDto(posts);
-        return createPostsResponseDto;
+        Posts savedPosts = postsRepository.save(posts);
+        return new CreatePostsResponseDto(savedPosts);
     }
 
+    // id로 게시글을 단건 조회
     @Override
     public FindByIdPostsResponseDto findById(Long id) {
         // 게시글의 id를 기준으로 post 조회
@@ -36,18 +39,19 @@ public class PostsServiceImpl implements PostsService {
         return findByIdPostsResponseDto;
     }
 
+    // id로 게시글을 찾아서 수정
     @Override
     public UpdatePostsResponseDto updateById(UpdatePostsRequestDto updatePostsRequestDto, Long id) {
         // id에 맞는 posts 조회
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
         // 조회한 posts에 requestDto 저장
+        posts.update(updatePostsRequestDto);
         Posts updatePosts = postsRepository.save(posts);
-        // 반환할 dto로 변환
-        UpdatePostsResponseDto updatePostsResponseDto = new UpdatePostsResponseDto(updatePosts);
-        return updatePostsResponseDto;
+        return new UpdatePostsResponseDto(updatePosts);
     }
 
+    // id로 게시글을 찾아서 삭제
     @Override
     public void deleteById(Long id) {
         // postsRepository에 id가 없다면 예외처리
