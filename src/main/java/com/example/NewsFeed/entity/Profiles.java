@@ -24,12 +24,15 @@ public class Profiles {
 
     // TODO 추후 입력받는 값에 따라 수정 가능성 있음
     @Size(max = 20)
+    @Column(length = 20)
     private String gender;
 
     @Size(max = 100)
+    @Column(length = 100)
     private String introduction;
 
     @Size(max = 255)
+    @Column
     private String image;
 
     private LocalDate birthday;
