@@ -16,5 +16,4 @@ public class CreatePostsRequestDto {
     @NotBlank(message = "내용을 입력해주세요.")
     @Size(min = 1, max = 100, message = "내용은 1 글자 이상 100 글자 이하로 입력해주세요.")
     private String contents;
-
 }

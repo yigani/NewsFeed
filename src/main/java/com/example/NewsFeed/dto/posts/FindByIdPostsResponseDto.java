@@ -3,23 +3,17 @@ package com.example.NewsFeed.dto.posts;
 import com.example.NewsFeed.entity.Posts;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 @Getter
 public class FindByIdPostsResponseDto {
-
-    private String username;
+    private Long id;
     private String title;
     private String contents;
+    private String writer;
 
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
-
-    public FindByIdPostsResponseDto(Posts posts, String username) {
-        this.username = username;
+    public FindByIdPostsResponseDto(Posts posts, String userName) {
+        this.id = posts.getId();
         this.title = posts.getTitle();
         this.contents = posts.getContents();
-        this.createAt = posts.getCreateAt();
-        this.updateAt = posts.getUpdateAt();
+        this.writer = userName;
     }
 }
