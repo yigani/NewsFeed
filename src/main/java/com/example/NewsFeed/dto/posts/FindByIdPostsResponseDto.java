@@ -8,15 +8,17 @@ import java.time.LocalDateTime;
 @Getter
 public class FindByIdPostsResponseDto {
 
+    private Long id;
     private String username;
     private String title;
     private String contents;
-
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
-    public FindByIdPostsResponseDto(Posts posts, String username) {
-        this.username = username;
+    // 이거 하나만 있으면 되나??
+    public FindByIdPostsResponseDto(Posts posts) {
+        this.id = posts.getId();
+        this.username = posts.getUser().getUserName(); // user에서 꺼내옴
         this.title = posts.getTitle();
         this.contents = posts.getContents();
         this.createAt = posts.getCreateAt();

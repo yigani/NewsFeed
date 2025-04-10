@@ -2,43 +2,81 @@ package com.example.NewsFeed.controller;
 
 import com.example.NewsFeed.dto.posts.*;
 import com.example.NewsFeed.entity.Users;
+import com.example.NewsFeed.repository.UsersRepository;
 import com.example.NewsFeed.service.PostsService;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import com.example.NewsFeed.dto.posts.CreatePostsRequestDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 
 @RestController
 @RequestMapping("/posts")
+@RequiredArgsConstructor
 public class PostsController {
 
     private final PostsService postsService;
+    private final UsersRepository usersRepository; // 유저 테스트용 코드, 끝난 후엔 삭제
 
-    public PostsController(PostsService postsService) {
-        this.postsService = postsService;
-    }
-
-    // TODO 로그인 이후에 @SessionAttribute () 내부의 Users 수정
     @PostMapping
-    public ResponseEntity<CreatePostsResponseDto> createPost(@RequestBody CreatePostsRequestDto createPostsRequestDto, @SessionAttribute(name = "Users") Users users) {
-        // Service
-        CreatePostsResponseDto createPostsResponseDto = postsService.create(createPostsRequestDto, users);
+    public ResponseEntity<CreatePostsResponseDto> createPost(@RequestBody CreatePostsRequestDto createPostsRequestDto) {
+        // 테스트용 가상 유저 (Postman 테스트를 위해 임시로 주입)
+        Users testUser = usersRepository.findById(1L).orElseThrow(() -> new RuntimeException("Test user not found"));
+
+        CreatePostsResponseDto createPostsResponseDto = postsService.create(createPostsRequestDto, testUser);
         return new ResponseEntity<>(createPostsResponseDto, HttpStatus.OK);
+
+        /*
+         ⚠️ Postman 테스트 끝난 후에는 아래 코드로 되돌릴 것
+
+        public ResponseEntity<CreatePostsResponseDto> createPost(@RequestBody CreatePostsRequestDto createPostsRequestDto,
+                                                                 @SessionAttribute(name = "Users") Users users) {
+            CreatePostsResponseDto createPostsResponseDto = postsService.create(createPostsRequestDto, users);
+            return new ResponseEntity<>(createPostsResponseDto, HttpStatus.OK);
+        }
+        */
+
     }
 
+    // 게시글 id로 게시글 단건 조회
     @GetMapping("/{postId}")
     public ResponseEntity<FindByIdPostsResponseDto> findPostById(@PathVariable Long postId) {
-        FindByIdPostsResponseDto findByIdPostsResponseDto = postsService.findById(postId);
-        return new ResponseEntity<>(findByIdPostsResponseDto, HttpStatus.OK);
+        return ResponseEntity.ok(postsService.findById(postId));
     }
 
-    @PatchMapping("/postId")
+    // TODO 인증 인가 필요 / 로그인된 유저 게시글 중 원하는 게시글 id를 기준으로 게시글 수정으로 변경
+    // 게시글 id로 게시글을 찾아서 게시글을 수정
+    @PatchMapping("/{postId}")
     public ResponseEntity<UpdatePostsResponseDto> updatePostById(@RequestBody UpdatePostsRequestDto updatePostsRequestDto, @PathVariable Long postId) {
         UpdatePostsResponseDto updatePostsResponseDto = postsService.updateById(updatePostsRequestDto, postId);
         return new ResponseEntity<>(updatePostsResponseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/postId")
-    public void deletePostById(@PathVariable Long postId) {
+    // TODO 인증 인가 필요 / 로그인된 유저 게시글 중 ID로 찾아서 삭제
+    // 게시글 id로 게시글을 찾아서 삭제
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deletePostById(@PathVariable Long postId) {
         postsService.deleteById(postId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/feed")
+    public ResponseEntity<Page<FindByIdPostsResponseDto>> getNewsFeed(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(postsService.getNewsFeed(pageable));
+    }
+
+    @GetMapping("/newsfeed")
+    public Page<FindByIdPostsResponseDto> getNewsFeed(@PageableDefault(size = 10, sort = "createAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return postsService.getNewsFeed(pageable);
     }
 }
