@@ -1,9 +1,9 @@
-package com.example.NewsFeed.users;
+package com.example.NewsFeed.dto.login;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
-import org.antlr.v4.runtime.misc.NotNull;
+
 @Getter
 public class LoginRequestDto {
 
