@@ -1,6 +1,5 @@
 package com.example.NewsFeed.dto.profiles;
 
-import com.example.NewsFeed.dto.users.UserResponseDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

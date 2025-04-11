@@ -9,11 +9,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UpdatePostsRequestDto {
 
-    @NotBlank(message = "제목을 입력해주세요.")
+    @NotBlank(message = "수정할 제목을 입력해주세요.")
     @Size(min = 1, max = 30, message = "제목은 1 글자 이상 30 글자 이하로 입력해주세요.")
     private String title;
 
-    @NotBlank(message = "내용을 입력해주세요.")
+    @NotBlank(message = "수정할 내용을 입력해주세요.")
     @Size(min = 1, max = 100, message = "내용은 1 글자 이상 100 글자 이하로 입력해주세요.")
     private String contents;
 }
