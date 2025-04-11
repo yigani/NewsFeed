@@ -43,6 +43,13 @@ public class Users extends BaseEntity{
         this.isDelete = false;
     }
 
+    public Users(String email, String password, String userName) {
+        this.email = email;
+        this.password = password;
+        this.userName = userName;
+        this.isDelete = false; // 기본값으로 false 설정
+    }
+
     public void updatePassword(UpdatePasswordRequestDto dto) {
         this.password = dto.getNewPassword();
     }
