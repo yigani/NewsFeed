@@ -25,7 +25,7 @@ public class MyProfileUpdateRequestDto {
     @Getter
     @RequiredArgsConstructor
     public static class UserProfile{
-        private final String gender;
+        private final int gender;
         private final LocalDate birthday;
         private final String introduction;
         private final String image;
