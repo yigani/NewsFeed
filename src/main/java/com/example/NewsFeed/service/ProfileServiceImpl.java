@@ -42,21 +42,23 @@ public class ProfileServiceImpl implements ProfileService{
         Profiles profile = profilesRepository.findById(userId)
                         .orElseThrow(()-> new IllegalArgumentException("프로필이 생성되지 않았습니다."));
 
-        user.updateUserName(requestDto.getUser().getUserName());
+        user.updateUserName(requestDto.getUsers().getUsername());
 
         profile.updateProfile(
-
-                requestDto.getProfile().getGender(),
-                requestDto.getProfile().getIntroduction(),
-                requestDto.getProfile().getImage(),
-                requestDto.getProfile().getBirthDay()
+                requestDto.getProfiles().getGender(),
+                requestDto.getProfiles().getIntroduction(),
+                requestDto.getProfiles().getImage(),
+                requestDto.getProfiles().getBirthday()
         );
+
+        // TODO 저장 부분 수정 진행 예정
+        usersRepository.save(user);
+        profilesRepository.save(profile);
 
         MyProfileUpdateResponseDto.UserName userName = new MyProfileUpdateResponseDto.UserName(user.getUserName());
         MyProfileUpdateResponseDto.UserProfile userProfile = new MyProfileUpdateResponseDto.UserProfile(profile.getGender(), profile.getBirthday(), profile.getIntroduction(),profile.getImage());
 
         MyProfileUpdateResponseDto responseDto = new MyProfileUpdateResponseDto(userName,userProfile);
-
 
         return responseDto;
     }
