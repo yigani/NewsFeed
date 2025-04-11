@@ -1,9 +1,11 @@
 package com.example.NewsFeed.controller;
 
+import com.example.NewsFeed.consts.Const;
 import com.example.NewsFeed.dto.posts.*;
 import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.repository.UsersRepository;
 import com.example.NewsFeed.service.PostsService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,7 +42,7 @@ public class PostsController {
     // TODO 인증 인가 필요 / 로그인된 유저 게시글 중 원하는 게시글 id를 기준으로 게시글 수정으로 변경
     // 게시글 id로 게시글을 찾아서 게시글을 수정
     @PatchMapping("/{postId}")
-    public ResponseEntity<UpdatePostsResponseDto> updatePostById(@Valid @RequestBody UpdatePostsRequestDto updatePostsRequestDto, @PathVariable Long postId) {
+    public ResponseEntity<UpdatePostsResponseDto> updatePostById(@Valid @RequestBody UpdatePostsRequestDto updatePostsRequestDto,@SessionAttribute(name = Const.LOGIN_USER) Long postId) {
         UpdatePostsResponseDto updatePostsResponseDto = postsService.updateById(updatePostsRequestDto, postId);
         return new ResponseEntity<>(updatePostsResponseDto, HttpStatus.OK);
     }
@@ -48,7 +50,7 @@ public class PostsController {
     // TODO 인증 인가 필요 / 로그인된 유저 게시글 중 ID로 찾아서 삭제
     // 게시글 id로 게시글을 찾아서 삭제
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePostById(  @SessionAttribute(name = Const.LOGIN_USER) Long postId) {
+    public ResponseEntity<Void> deletePostById( @SessionAttribute(name = Const.LOGIN_USER) Long postId) {
         postsService.deleteById(postId);
         return ResponseEntity.noContent().build();
     }

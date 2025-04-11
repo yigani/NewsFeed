@@ -58,8 +58,8 @@ public class Users extends BaseEntity{
         this.isDelete = false; // 기본값으로 false 설정
     }
 
-    public void updatePassword(UpdatePasswordRequestDto dto) {
-        this.password = dto.getNewPassword();
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
     }
 
     public void deactivateUser() {

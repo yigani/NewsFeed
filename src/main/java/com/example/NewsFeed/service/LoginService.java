@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface LoginService {
+
     public Long handleLogin(LoginRequestDto dto);
-    public String passwordEncrypt(SignUpUserRequestDto dto);
 
 }

@@ -1,6 +1,8 @@
 package com.example.NewsFeed.controller;
 
 import com.example.NewsFeed.dto.follows.FollowRequestDto;
+import com.example.NewsFeed.consts.Const;
+import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.repository.FollowsRepository;
 import com.example.NewsFeed.service.FollowsService;
 import org.springframework.http.HttpStatus;
@@ -21,19 +23,19 @@ public class FollowsController {
         this.followsService = followsService;
     }
 
-    //팔로우  @SessionAttribute(name = Const.LOGIN_USER)
+    //팔로우
     @PostMapping("/follow")
-    public ResponseEntity<String> follow(@RequestBody FollowRequestDto followRequestDto){
-        followsService.follow(followRequestDto.getFromUserId(),followRequestDto.getToUserId());
+    public ResponseEntity<String> follow(@SessionAttribute(required = false, name = Const.LOGIN_USER) Users users, @RequestBody FollowRequestDto followRequestDto){
+        followsService.follow(users.getId(),followRequestDto.getToUserId());
         return new ResponseEntity<>("팔로우 성공",HttpStatus.OK);
     }
 
     //로그인 기능 생기면 수정
-    //언팔  @SessionAttribute(name = Const.LOGIN_USER)
+    //언팔
     @DeleteMapping("/unfollow")
-    public ResponseEntity<String> unfollow(@RequestBody FollowRequestDto followRequestDto){
+    public ResponseEntity<String> unfollow(@SessionAttribute(required = false,name = Const.LOGIN_USER) Users users, @RequestBody FollowRequestDto followRequestDto){
 
-        followsService.unfollow(followRequestDto.getFromUserId(),followRequestDto.getToUserId());
+        followsService.unfollow(users.getId(),followRequestDto.getToUserId());
         return new ResponseEntity<>("언팔 성공",HttpStatus.OK);
     }
 
