@@ -1,10 +1,12 @@
 package com.example.NewsFeed.entity;
 
+import com.example.NewsFeed.dto.users.CreateProfileRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -34,5 +36,22 @@ public class Profiles {
     @Column
     private String image;
 
-    private LocalDateTime birthday;
+    private LocalDate birthday;
+    
+    public Profiles(Users users, CreateProfileRequestDto dto) {
+        this.gender = dto.getGender();
+        this.introduction = dto.getIntroduction();
+        this.image = dto.getImage();
+        this.birthday = dto.getBirthday();
+        this.userId = users;
+    }
+
+    public void updateProfile(String gender,String introduction,String image, LocalDate birthday){
+
+        this.gender = gender;
+        this.introduction = introduction;
+        this.image = image;
+        this.birthday = birthday;
+
+    }
 }
