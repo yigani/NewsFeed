@@ -1,4 +1,4 @@
-package com.example.NewsFeed.users;
+package com.example.NewsFeed.dto.login;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

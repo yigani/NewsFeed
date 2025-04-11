@@ -1,14 +1,12 @@
-package com.example.NewsFeed;
+package com.example.NewsFeed.controller;
 
-import com.example.NewsFeed.dto.users.LoginRequestDto;
+import com.example.NewsFeed.dto.login.LoginRequestDto;
 import com.example.NewsFeed.service.LoginService;
-import com.example.NewsFeed.service.UsersService;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +18,7 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/users/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDto dto, HttpServletRequest request) {
+    public ResponseEntity<String> login(@Validated @RequestBody LoginRequestDto dto, HttpServletRequest request) {
 
         Long userId = loginService.handleLogin(dto);
 

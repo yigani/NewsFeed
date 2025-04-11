@@ -1,12 +1,13 @@
 package com.example.NewsFeed.exception;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.Collections;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,4 +41,11 @@ public class GlobalExceptionHandler {
 //                });
 //        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 //    }
+    // TODO: 로그인 검증 관련 예외처리
+    @ExceptionHandler(InvalidCredentialException.class)
+    public ResponseEntity<?> handleInvalidCredential(InvalidCredentialException e) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Collections.singletonMap("error", e.getMessage()));
+    }
 }

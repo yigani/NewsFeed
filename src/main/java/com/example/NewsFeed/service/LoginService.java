@@ -1,7 +1,9 @@
-package com.example.NewsFeed;
+package com.example.NewsFeed.service;
 
-import com.example.NewsFeed.dto.users.LoginRequestDto;
+
+import com.example.NewsFeed.dto.login.LoginRequestDto;
 import com.example.NewsFeed.entity.Users;
+import com.example.NewsFeed.exception.InvalidCredentialException;
 import com.example.NewsFeed.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

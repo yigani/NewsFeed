@@ -1,4 +1,5 @@
-package com.example.NewsFeed;
+package com.example.NewsFeed.config;
+
 
 import com.example.NewsFeed.fillter.LoginFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
