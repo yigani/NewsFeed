@@ -2,7 +2,6 @@ package com.example.NewsFeed.dto.profiles;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 
 import java.time.LocalDate;
 
@@ -10,14 +9,14 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class MyProfileUpdateResponseDto {
 
-    private final UserName user;
-    private final UserProfile profile;
+    private final UserName users;
+    private final UserProfile profiles;
 
     @Getter
     @RequiredArgsConstructor
     public static class UserName {
 
-        private final String userName;
+        private final String username;
 
     }
 
@@ -26,7 +25,7 @@ public class MyProfileUpdateResponseDto {
     public static class UserProfile {
 
         private final String gender;
-        private final LocalDate birthDay;
+        private final LocalDate birthday;
         private final String introduction;
         private final String image;
 
