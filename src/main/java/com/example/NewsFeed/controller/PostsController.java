@@ -2,7 +2,9 @@ package com.example.NewsFeed.controller;
 
 import com.example.NewsFeed.dto.posts.*;
 import com.example.NewsFeed.entity.Users;
+import com.example.NewsFeed.repository.UsersRepository;
 import com.example.NewsFeed.service.PostsService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class PostsController {
 
     private final PostsService postsService;
+    private final UsersRepository usersRepository;
 
     @PostMapping
     public ResponseEntity<CreatePostsResponseDto> createPost(@RequestBody CreatePostsRequestDto createPostsRequestDto,
@@ -52,7 +55,7 @@ public class PostsController {
     }
 
     @GetMapping("/feed")
-    public ResponseEntity<Page<FindByIdPostsResponseDto>> getNewsFeed(
+    public ResponseEntity<Page<PasingPostsResponseDto>> getNewsFeed(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
@@ -61,7 +64,7 @@ public class PostsController {
     }
 
     @GetMapping("/newsfeed")
-    public Page<FindByIdPostsResponseDto> getNewsFeed(@PageableDefault(size = 10, sort = "createAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public Page<PasingPostsResponseDto> getNewsFeed(@PageableDefault(size = 10, sort = "createAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return postsService.getNewsFeed(pageable);
     }
 }
