@@ -1,5 +1,6 @@
 package com.example.NewsFeed.dto.users;
 
+import com.example.NewsFeed.config.Gender;
 import com.example.NewsFeed.entity.Profiles;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreateProfileResponseDto {
 
-    private String gender;
+    private Gender gender;
     private LocalDate birthday;
     private String introduction;
     private String image;

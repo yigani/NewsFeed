@@ -1,5 +1,6 @@
 package com.example.NewsFeed.entity;
 
+import com.example.NewsFeed.config.Gender;
 import com.example.NewsFeed.dto.users.CreateProfileRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -24,9 +25,10 @@ public class Profiles {
     private Users userId;
 
     // TODO 추후 입력받는 값에 따라 수정 가능성 있음
-    @Size(max = 20)
-    @Column(length = 20)
-    private String gender;
+//    @Size(max = 20)
+//    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Size(max = 100)
     @Column(length = 100)
@@ -39,16 +41,15 @@ public class Profiles {
     private LocalDate birthday;
     
     public Profiles(Users users, CreateProfileRequestDto dto) {
-        this.gender = dto.getGender();
+        this.gender = Gender.fromInt(dto.getGender());
         this.introduction = dto.getIntroduction();
         this.image = dto.getImage();
         this.birthday = dto.getBirthday();
         this.userId = users;
     }
 
-    public void updateProfile(String gender,String introduction,String image, LocalDate birthday){
-
-        this.gender = gender;
+    public void updateProfile(int gender,String introduction,String image, LocalDate birthday){
+        this.gender = Gender.fromInt(gender);
         this.introduction = introduction;
         this.image = image;
         this.birthday = birthday;

@@ -1,5 +1,6 @@
 package com.example.NewsFeed.dto.profiles;
 
+import com.example.NewsFeed.config.Gender;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +25,7 @@ public class MyProfileUpdateResponseDto {
     @RequiredArgsConstructor
     public static class UserProfile {
 
-        private final String gender;
+        private final Gender gender;
         private final LocalDate birthday;
         private final String introduction;
         private final String image;
