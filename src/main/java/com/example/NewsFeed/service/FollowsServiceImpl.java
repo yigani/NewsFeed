@@ -102,4 +102,21 @@ public class FollowsServiceImpl implements FollowsService{
         }
         return followerUserName;
     }
+
+    @Override
+    public int followerCount(Long userId) {
+        Users users = usersRepository.findById(userId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
+        int count = followsRepository.countByFollower(users);
+        return count;
+    }
+
+    @Override
+    public int followingCount(Long userId) {
+        Users users = usersRepository.findById(userId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
+        int count = followsRepository.countByFollowing(users);
+        return count;
+    }
+
 }

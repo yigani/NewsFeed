@@ -16,4 +16,8 @@ public interface FollowsService {
 
     List<String> followerUserNames(Long userId);
 
+    int followerCount(Long userId);
+
+    int followingCount(Long userId);
+
 }

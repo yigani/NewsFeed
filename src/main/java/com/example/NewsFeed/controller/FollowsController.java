@@ -37,16 +37,29 @@ public class FollowsController {
 
 
     //목록조회
-    @GetMapping("/{userId}/following")
-    public ResponseEntity<List<String>> followingList(@PathVariable Long userId){
-        List<String> followingNameList = followsService.followingUserNames(userId);
+    @GetMapping("/{id}/following")
+    public ResponseEntity<List<String>> followingList(@PathVariable Long id){
+        List<String> followingNameList = followsService.followingUserNames(id);
         return new ResponseEntity<>(followingNameList,HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}/follower")
-    public ResponseEntity<List<String>> followerList(@PathVariable Long userId){
-        List<String> followerNameList = followsService.followerUserNames(userId);
+    @GetMapping("/{id}/follower")
+    public ResponseEntity<List<String>> followerList(@PathVariable Long id){
+        List<String> followerNameList = followsService.followerUserNames(id);
         return new ResponseEntity<>(followerNameList,HttpStatus.OK);
+    }
+
+    //카운트
+    @GetMapping("/{id}/followercount")
+    public ResponseEntity<Integer> followerCount(@PathVariable Long id) {
+        int count = followsService.followerCount(id);
+        return new ResponseEntity<>(count,HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/followingcount")
+    public ResponseEntity<Integer> followingCount(@PathVariable Long id) {
+        int count = followsService.followingCount(id);
+        return new ResponseEntity<>(count,HttpStatus.OK);
     }
 
 }
