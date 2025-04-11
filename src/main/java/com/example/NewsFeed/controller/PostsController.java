@@ -5,6 +5,7 @@ import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.repository.UsersRepository;
 import com.example.NewsFeed.service.PostsService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +26,7 @@ public class PostsController {
     private final UsersRepository usersRepository;
 
     @PostMapping
-    public ResponseEntity<CreatePostsResponseDto> createPost(@RequestBody CreatePostsRequestDto createPostsRequestDto,
+    public ResponseEntity<CreatePostsResponseDto> createPost(@Valid @RequestBody CreatePostsRequestDto createPostsRequestDto,
                                                              @SessionAttribute(name = "Users") Users users) {
         CreatePostsResponseDto createPostsResponseDto = postsService.create(createPostsRequestDto, users);
         return new ResponseEntity<>(createPostsResponseDto, HttpStatus.OK);
@@ -41,7 +42,7 @@ public class PostsController {
     // TODO 인증 인가 필요 / 로그인된 유저 게시글 중 원하는 게시글 id를 기준으로 게시글 수정으로 변경
     // 게시글 id로 게시글을 찾아서 게시글을 수정
     @PatchMapping("/{postId}")
-    public ResponseEntity<UpdatePostsResponseDto> updatePostById(@RequestBody UpdatePostsRequestDto updatePostsRequestDto, @PathVariable Long postId) {
+    public ResponseEntity<UpdatePostsResponseDto> updatePostById(@Valid @RequestBody UpdatePostsRequestDto updatePostsRequestDto, @PathVariable Long postId) {
         UpdatePostsResponseDto updatePostsResponseDto = postsService.updateById(updatePostsRequestDto, postId);
         return new ResponseEntity<>(updatePostsResponseDto, HttpStatus.OK);
     }
