@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -35,6 +37,12 @@ public class Users extends BaseEntity{
     private String userName;
 
     private boolean isDelete;
+
+    @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
+    private List<Follows> followings;
+
+    @OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
+    private List<Follows> followers;
 
     public Users(SignUpUserRequestDto dto) {
         this.email = dto.getEmail();

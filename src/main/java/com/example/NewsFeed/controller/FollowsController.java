@@ -4,10 +4,7 @@ import com.example.NewsFeed.repository.FollowsRepository;
 import com.example.NewsFeed.service.FollowsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +20,23 @@ public class FollowsController {
         this.followsService = followsService;
     }
 
+    //팔로우
+    @PostMapping("/follow")
+    public ResponseEntity<String> follow(@RequestParam Long fromUser,@RequestParam Long toUser){
+        followsService.follow(fromUser,toUser);
+        return new ResponseEntity<>("팔로우 성공",HttpStatus.OK);
+    }
+
+    //언팔
+    @PostMapping("/unfollow")
+    public ResponseEntity<String> unfollow(@RequestParam Long fromUser,@RequestParam Long toUser){
+        followsService.unfollow(fromUser,toUser);
+        return new ResponseEntity<>("언팔 성공",HttpStatus.OK);
+    }
+
+
+
+    //목록조회
     @GetMapping("/{userId}/following")
     public ResponseEntity<List<String>> followingList(@PathVariable Long userId){
         List<String> followingNameList = followsService.followingUserNames(userId);

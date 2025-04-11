@@ -24,13 +24,50 @@ public class FollowsServiceImpl implements FollowsService{
         this.followsRepository = followsRepository;
     }
 
-    // 이름 중복문제 해결해야함...
+    //팔로우
+    @Override
+    public void follow(Long fromUserId, Long toUserId) {
+        if (fromUserId.equals(toUserId)) {
+            throw new IllegalArgumentException("자기 자신을 팔로우할 수 없습니다.");
+        }
+
+        Users fromUser = usersRepository.findById(fromUserId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
+        Users toUser = usersRepository.findById(toUserId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
+
+        if (followsRepository.existsByFollowerAndFollowing(fromUser, toUser)){
+            throw new IllegalArgumentException("이미 팔로우한 유저입니다.");
+        }
+        Follows follow = new Follows(fromUser, toUser);
+        followsRepository.save(follow);
+    }
+    //언팔로우
+    @Override
+    public void unfollow(Long fromUserId, Long toUserId) {
+
+        if (fromUserId.equals(toUserId)) {
+            throw new IllegalArgumentException("자기 자신을 언팔로우할 수 없습니다.");
+        }
+
+        Users fromUser = usersRepository.findById(fromUserId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
+        Users toUser = usersRepository.findById(toUserId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
+        Follows follow = followsRepository.findByFollowerAndFollowing(fromUser,toUser)
+                .orElseThrow(()-> new IllegalArgumentException("팔로우 관계가 존재하지 않습니다."));
+
+        followsRepository.delete(follow);
+    }
+
+
+    // 이름 중복문제 해결
     //팔로잉 유저목록
     @Override
     public List<String> followingUserNames(Long userId) {
 
         Users user = usersRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("팔로잉한 유저가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
 
         List<Follows> following = followsRepository.findByFollower(user);
         Set<Long> names = new HashSet<>();
@@ -51,7 +88,7 @@ public class FollowsServiceImpl implements FollowsService{
     public List<String> followerUserNames(Long userId) {
 
         Users user = usersRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("팔로워한 유저가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
 
         List<Follows> follower = followsRepository.findByFollowing(user);
         Set<Long> names = new HashSet<>();
@@ -59,7 +96,7 @@ public class FollowsServiceImpl implements FollowsService{
 
         for (Follows follow : follower){
             Users followerUser = follow.getFollower();
-            if(names.add(follow.getId())){
+            if(names.add(followerUser.getId())){
                 followerUserName.add(followerUser.getUserName());
             }
         }
