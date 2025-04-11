@@ -10,6 +10,7 @@ import com.example.NewsFeed.entity.Profiles;
 import com.example.NewsFeed.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,6 +24,8 @@ public class UsersServiceImpl implements UsersService{
 
     private final UsersRepository usersRepository;
     private final ProfilesRepository profilesRepository;
+    //TODO 확인 필요
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public SignUpUserResponseDto signUp(SignUpUserRequestDto dto) {

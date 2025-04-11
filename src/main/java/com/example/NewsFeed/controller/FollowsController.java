@@ -21,9 +21,7 @@ public class FollowsController {
         this.followsService = followsService;
     }
 
-    // TODO팔로우랑 언팔로우는 로그인 기능 생기면 수정해야될것같습니다.
-
-    //팔로우
+    //팔로우  @SessionAttribute(name = Const.LOGIN_USER)
     @PostMapping("/follow")
     public ResponseEntity<String> follow(@RequestBody FollowRequestDto followRequestDto){
         followsService.follow(followRequestDto.getFromUserId(),followRequestDto.getToUserId());
@@ -31,13 +29,13 @@ public class FollowsController {
     }
 
     //로그인 기능 생기면 수정
-    //언팔
+    //언팔  @SessionAttribute(name = Const.LOGIN_USER)
     @DeleteMapping("/unfollow")
     public ResponseEntity<String> unfollow(@RequestBody FollowRequestDto followRequestDto){
+
         followsService.unfollow(followRequestDto.getFromUserId(),followRequestDto.getToUserId());
         return new ResponseEntity<>("언팔 성공",HttpStatus.OK);
     }
-
 
 
     //목록조회
@@ -67,3 +65,4 @@ public class FollowsController {
     }
 
 }
+

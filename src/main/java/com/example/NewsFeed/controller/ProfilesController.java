@@ -1,5 +1,6 @@
 package com.example.NewsFeed.controller;
 
+import com.example.NewsFeed.consts.Const;
 import com.example.NewsFeed.dto.profiles.MyProfileUpdateRequestDto;
 import com.example.NewsFeed.dto.profiles.MyProfileUpdateResponseDto;
 import com.example.NewsFeed.dto.profiles.ProfileResponseDto;
@@ -29,7 +30,7 @@ public class ProfilesController {
     //로그인 구현시 userId부분 "/me"로 수정필요
     @PatchMapping("/me/{userId}")
     public ResponseEntity<MyProfileUpdateResponseDto> updateProfile(
-            @PathVariable Long userId,
+            @SessionAttribute(name = Const.LOGIN_USER) Long userId,
             @RequestBody MyProfileUpdateRequestDto myprofileUpdate
     ){
         MyProfileUpdateResponseDto responseDto = profileService.updateProfile(userId, myprofileUpdate);

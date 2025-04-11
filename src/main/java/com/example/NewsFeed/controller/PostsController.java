@@ -4,8 +4,6 @@ import com.example.NewsFeed.dto.posts.*;
 import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.repository.UsersRepository;
 import com.example.NewsFeed.service.PostsService;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,7 +48,7 @@ public class PostsController {
     // TODO 인증 인가 필요 / 로그인된 유저 게시글 중 ID로 찾아서 삭제
     // 게시글 id로 게시글을 찾아서 삭제
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePostById(@PathVariable Long postId) {
+    public ResponseEntity<Void> deletePostById(  @SessionAttribute(name = Const.LOGIN_USER) Long postId) {
         postsService.deleteById(postId);
         return ResponseEntity.noContent().build();
     }

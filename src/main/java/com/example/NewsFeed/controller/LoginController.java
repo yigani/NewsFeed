@@ -1,7 +1,7 @@
 package com.example.NewsFeed.controller;
 
 import com.example.NewsFeed.dto.login.LoginRequestDto;
-import com.example.NewsFeed.service.LoginService;
+import com.example.NewsFeed.service.LoginServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final LoginService loginService;
+    private final LoginServiceImpl loginService;
 
     @PostMapping("/users/login")
     public ResponseEntity<String> login(@Validated @RequestBody LoginRequestDto dto, HttpServletRequest request) {
