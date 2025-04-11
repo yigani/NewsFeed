@@ -21,7 +21,8 @@ public class FollowsController {
         this.followsService = followsService;
     }
 
-    //팔로우랑 언팔로우는 로그인 기능 생기면 수정해야될것같습니다.
+    // TODO팔로우랑 언팔로우는 로그인 기능 생기면 수정해야될것같습니다.
+
     //팔로우
     @PostMapping("/follow")
     public ResponseEntity<String> follow(@RequestBody FollowRequestDto followRequestDto){
@@ -29,6 +30,7 @@ public class FollowsController {
         return new ResponseEntity<>("팔로우 성공",HttpStatus.OK);
     }
 
+    //로그인 기능 생기면 수정
     //언팔
     @DeleteMapping("/unfollow")
     public ResponseEntity<String> unfollow(@RequestBody FollowRequestDto followRequestDto){
