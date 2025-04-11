@@ -7,8 +7,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-public interface UsersRepository extends JpaRepository<Users,Long> {
+import java.util.Optional;
 
+public interface UsersRepository extends JpaRepository<Users, Long> {
+
+    Optional<Users> findByEmail(String email);
     List<Users> findByUserNameContaining(String userName);
 
     default Users findUsersByIdOrElseThrow(Long id){

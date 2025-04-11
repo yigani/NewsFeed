@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 @Getter
 public class FindByIdPostsResponseDto {
 
+    // TODO 이거 카멜 케이스 해야하는지 여부
     private String username;
     private String title;
     private String contents;
-
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
@@ -22,4 +22,5 @@ public class FindByIdPostsResponseDto {
         this.createAt = posts.getCreateAt();
         this.updateAt = posts.getUpdateAt();
     }
+
 }
