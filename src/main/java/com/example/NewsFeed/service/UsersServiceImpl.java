@@ -32,7 +32,7 @@ public class UsersServiceImpl implements UsersService{
     public SignUpUserResponseDto signUp(SignUpUserRequestDto dto) {
 
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
-        Users savedUser = new Users(dto.getEmail(), dto.getPassword(), encodedPassword);
+        Users savedUser = new Users(dto.getEmail(), encodedPassword , dto.getUsername());
         usersRepository.save(savedUser);
 
         return new SignUpUserResponseDto(savedUser);

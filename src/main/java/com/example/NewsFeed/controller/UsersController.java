@@ -44,7 +44,7 @@ public class UsersController {
      * 비밀번호 변경
      */
     @PatchMapping("/password")
-    public ResponseEntity<Void> updatePassword(@RequestParam Long id, @Valid @RequestBody UpdatePasswordRequestDto dto) {
+    public ResponseEntity<Void> updatePassword(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody UpdatePasswordRequestDto dto) {
 
         usersService.updatePassword(id, dto);
 
