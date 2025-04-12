@@ -34,7 +34,7 @@ public class ProfilesController {
             @SessionAttribute(name = Const.LOGIN_USER) Long userId,
             @RequestBody MyProfileUpdateRequestDto myprofileUpdate
     ){
-        log.info("✅ 암호화 코드{}",userId);
+
         MyProfileUpdateResponseDto responseDto = profileService.updateProfile(userId, myprofileUpdate);
         return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }

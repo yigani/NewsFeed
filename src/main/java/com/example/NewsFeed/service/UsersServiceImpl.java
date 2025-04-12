@@ -29,6 +29,7 @@ public class UsersServiceImpl implements UsersService{
     public SignUpUserResponseDto signUp(SignUpUserRequestDto dto) {
 
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
+
         Users savedUser = new Users(dto.getEmail(), encodedPassword , dto.getUsername());
         usersRepository.save(savedUser);
 
@@ -76,10 +77,12 @@ public class UsersServiceImpl implements UsersService{
 
         Users findUser = usersRepository.findUsersByIdOrElseThrow(id);
 
+        if (!passwordEncoder.matches(dto.getPassword(), findUser.getPassword())) {
 
-        if(!passwordEncoder.matches(findUser.getPassword(), dto.getPassword())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
         }
+
 
         findUser.deactivateUser();
 
