@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name = "posts")
-public class Posts extends BaseEntity{
+public class Posts extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,6 @@ public class Posts extends BaseEntity{
     @JoinColumn(name = "user_id")
     private Users user;
 
-    // 생성자: CreatePostsRequestDto 기반
     public Posts(CreatePostsRequestDto dto, Users user) {
         this.title = dto.getTitle();
         this.contents = dto.getContents();

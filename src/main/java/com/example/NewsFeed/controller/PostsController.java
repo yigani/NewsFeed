@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/posts")
 @RequiredArgsConstructor
@@ -54,6 +53,7 @@ public class PostsController {
         return ResponseEntity.noContent().build();
     }
 
+    // 게시글 정렬
     @GetMapping("/feed")
     public ResponseEntity<Page<PasingPostsResponseDto>> getNewsFeed(
             @RequestParam(defaultValue = "0") int page,
@@ -63,6 +63,7 @@ public class PostsController {
         return ResponseEntity.ok(postsService.getNewsFeed(pageable));
     }
 
+    // 게시글 작성일 기준 정렬
     @GetMapping("/newsfeed")
     public Page<PasingPostsResponseDto> getNewsFeed(@PageableDefault(size = 10, sort = "createAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return postsService.getNewsFeed(pageable);

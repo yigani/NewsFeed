@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/users")
@@ -44,8 +45,6 @@ public class UsersController {
     @PatchMapping("/password")
     public ResponseEntity<Void> updatePassword(@SessionAttribute(name = Const.LOGIN_USER) Users users, @Valid @RequestBody UpdatePasswordRequestDto dto) {
 
-        //세션 테스트
-
         usersService.updatePassword(users.getId(), dto);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -57,9 +56,9 @@ public class UsersController {
 
         HttpSession session = request.getSession(false);
 
-        // session이 존재한다 = 로그인을 했다
+        // session이 존재하지 않는다면 세션을 만료시킨다.
         if (session != null) {
-            session.invalidate(); // 세션을 만료시킨다.
+            session.invalidate();
         }
 
         DeactivateUserResponseDto deactivateUserResponseDto = usersService.deactivateUser(id, dto);
@@ -89,5 +88,4 @@ public class UsersController {
 
         return new ResponseEntity<>(searchUser, HttpStatus.OK);
     }
-
 }

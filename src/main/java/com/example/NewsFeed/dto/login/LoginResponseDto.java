@@ -6,7 +6,6 @@ import lombok.Getter;
 @Getter
 public class LoginResponseDto {
 
-
     @NotNull
     private final String email;
 
@@ -17,5 +16,4 @@ public class LoginResponseDto {
         this.email = email;
         this.password = password;
     }
-
 }

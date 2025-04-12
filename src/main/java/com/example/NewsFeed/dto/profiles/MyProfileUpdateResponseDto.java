@@ -16,9 +16,7 @@ public class MyProfileUpdateResponseDto {
     @Getter
     @RequiredArgsConstructor
     public static class UserName {
-
         private final String username;
-
     }
 
     @Getter
@@ -29,7 +27,5 @@ public class MyProfileUpdateResponseDto {
         private final LocalDate birthday;
         private final String introduction;
         private final String image;
-
     }
-
 }

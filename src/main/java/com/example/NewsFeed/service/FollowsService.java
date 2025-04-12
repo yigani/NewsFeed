@@ -15,5 +15,4 @@ public interface FollowsService {
     int followerCount(Long userId);
 
     int followingCount(Long userId);
-
 }

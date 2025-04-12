@@ -8,5 +8,4 @@ import lombok.RequiredArgsConstructor;
 public class UserInfoResponseDto {
 
     private final String userName;
-
 }

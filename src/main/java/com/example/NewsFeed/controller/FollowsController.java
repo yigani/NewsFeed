@@ -62,6 +62,5 @@ public class FollowsController {
         int count = followsService.followingCount(id);
         return new ResponseEntity<>(count, HttpStatus.OK);
     }
-
 }
 

@@ -14,5 +14,4 @@ public class ProfileResponseDto {
     private final LocalDate birthday;
     private final String introduction;
     private final String image;
-
 }

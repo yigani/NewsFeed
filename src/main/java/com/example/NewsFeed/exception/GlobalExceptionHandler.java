@@ -28,8 +28,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-    // TODO 아래 두 예외는 같은 상황에서 사용 중, 목적을 나눌 필요가 있어 보임
-
     // DB에서 데이터를 찾지 못 할 때 예외처리
     // 반환 값: 메세지
     @ExceptionHandler(EntityNotFoundException.class)
@@ -50,5 +48,4 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> invalidInputException(NotLoginUserException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
-
 }

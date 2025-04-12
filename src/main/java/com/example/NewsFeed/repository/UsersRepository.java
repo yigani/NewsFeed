@@ -1,15 +1,11 @@
 package com.example.NewsFeed.repository;
 
 import com.example.NewsFeed.entity.Users;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
 import java.util.Optional;
 
 public interface UsersRepository extends JpaRepository<Users, Long> {
@@ -18,8 +14,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 
     List<Users> findByUserNameContaining(String userName);
 
-    default Users findUsersByIdOrElseThrow(Long id){
+    default Users findUsersByIdOrElseThrow(Long id) {
         return findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
-
 }

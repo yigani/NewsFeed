@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.SessionAttribute;
+
 @Slf4j
 @Service
 public class ProfileServiceImpl implements ProfileService {
@@ -51,7 +52,6 @@ public class ProfileServiceImpl implements ProfileService {
 
         Profiles profile = profilesRepository.findByUserId(user)
                 .orElseThrow(() -> new IllegalArgumentException("프로필이 생성되지 않았습니다."));
-
 
         user.updateUserName(requestDto.getUsers().getUsername());
 

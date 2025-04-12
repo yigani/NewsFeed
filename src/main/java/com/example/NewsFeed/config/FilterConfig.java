@@ -1,6 +1,5 @@
 package com.example.NewsFeed.config;
 
-
 import com.example.NewsFeed.fillter.LoginFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,7 @@ public class FilterConfig {
     // 로그인 필터 등록
     // 모든 요청에 로그인 필터 적용 및 실행 순서 설정
     @Bean
-    public FilterRegistrationBean loginFilter(){
+    public FilterRegistrationBean loginFilter() {
 
         //필터 등록 클래스
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
@@ -28,7 +27,5 @@ public class FilterConfig {
         filterRegistrationBean.addUrlPatterns("/*");
 
         return filterRegistrationBean;
-
     }
-
 }

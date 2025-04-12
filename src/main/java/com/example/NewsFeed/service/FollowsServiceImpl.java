@@ -61,7 +61,7 @@ public class FollowsServiceImpl implements FollowsService {
         followsRepository.delete(follow);
     }
 
-    // 팔로잉 유저목록 조회
+    // 팔로잉 유저 목록 조회
     @Override
     public List<String> followingUserNames(Long userId) {
 
@@ -78,7 +78,6 @@ public class FollowsServiceImpl implements FollowsService {
                 followingUserName.add(followingUser.getUserName());
             }
         }
-
         return followingUserName;
     }
 
@@ -117,5 +116,4 @@ public class FollowsServiceImpl implements FollowsService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
         return followsRepository.countByFollowing(users);
     }
-
 }

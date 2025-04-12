@@ -10,5 +10,4 @@ public class UserResponseDto {
 
     private final String userName;
     private final String email;
-
 }
