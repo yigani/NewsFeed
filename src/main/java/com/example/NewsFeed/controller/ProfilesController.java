@@ -25,7 +25,6 @@ public class ProfilesController {
         return new ResponseEntity<>(profileResponseDto, HttpStatus.OK);
     }
 
-
     // 로그인된 유저 프로필 수정
     @PatchMapping("/me")
     public ResponseEntity<MyProfileUpdateResponseDto> updateProfile(

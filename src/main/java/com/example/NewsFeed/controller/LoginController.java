@@ -33,11 +33,13 @@ public class LoginController {
     // 로그아웃
     @PostMapping("/users/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
+
         HttpSession session = request.getSession(false);
 
         if (session != null) {
             session.invalidate();
         }
+
         return ResponseEntity.ok("로그아웃 성공");
     }
 

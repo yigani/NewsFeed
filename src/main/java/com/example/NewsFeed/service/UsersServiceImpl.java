@@ -61,15 +61,11 @@ public class UsersServiceImpl implements UsersService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-
         if (!passwordEncoder.matches(dto.getPassword(), findUser.getPassword())) {
-
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-
         }
 
         findUser.updatePassword(encodedNewPassword);
-
     }
 
     // 로그인된 유저 탈퇴
@@ -80,9 +76,7 @@ public class UsersServiceImpl implements UsersService {
         Users findUser = usersRepository.findUsersByIdOrElseThrow(id);
 
         if (!passwordEncoder.matches(dto.getPassword(), findUser.getPassword())) {
-
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-
         }
 
         findUser.deactivateUser();
@@ -105,6 +99,10 @@ public class UsersServiceImpl implements UsersService {
 
         Users user = usersRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+
+        if (user.isDelete()) {
+            throw new IllegalArgumentException("해당 유저를 찾을 수 없습니다.");
+        }
 
         return new UserInfoResponseDto(user.getUserName());
     }

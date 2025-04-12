@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CreateProfileRequestDto {
 
-    private int gender;
+    private Gender gender;
     private LocalDate birthday;
     @Size(max = 100, message = "소개는 30글자 이하로 입력해주세요.")
     private String introduction;

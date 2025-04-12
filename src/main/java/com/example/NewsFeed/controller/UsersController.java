@@ -4,6 +4,8 @@ import com.example.NewsFeed.consts.Const;
 import com.example.NewsFeed.dto.users.*;
 import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.service.UsersService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +35,6 @@ public class UsersController {
     @PostMapping("/profile")
     public ResponseEntity<CreateProfileResponseDto> createProfile(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody CreateProfileRequestDto dto) {
 
-
         CreateProfileResponseDto createdProfile = usersService.createProfile(id, dto);
 
         return new ResponseEntity<>(createdProfile, HttpStatus.CREATED);
@@ -45,8 +46,6 @@ public class UsersController {
 
         //세션 테스트
 
-
-
         usersService.updatePassword(users.getId(), dto);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -54,7 +53,14 @@ public class UsersController {
 
     // 로그인 된 유저 탈퇴
     @PatchMapping("/me/status")
-    public ResponseEntity<DeactivateUserResponseDto> deactivateUser(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody DeactivateUserRequestDto dto) {
+    public ResponseEntity<DeactivateUserResponseDto> deactivateUser(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody DeactivateUserRequestDto dto, HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+
+        // session이 존재한다 = 로그인을 했다
+        if (session != null) {
+            session.invalidate(); // 세션을 만료시킨다.
+        }
 
         DeactivateUserResponseDto deactivateUserResponseDto = usersService.deactivateUser(id, dto);
 

@@ -31,9 +31,7 @@ public class LoginServiceImpl implements LoginService {
                 () -> new InvalidCredentialException("해당 아이디가 존재하지 않습니다."));
 
         if (user.isDelete()) {
-
-           throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-
+           throw new InvalidCredentialException("존재하지 않는 회원입니다.");
         }
 
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
