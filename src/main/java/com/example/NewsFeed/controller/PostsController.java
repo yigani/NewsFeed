@@ -3,7 +3,6 @@ package com.example.NewsFeed.controller;
 import com.example.NewsFeed.consts.Const;
 import com.example.NewsFeed.dto.posts.*;
 import com.example.NewsFeed.entity.Users;
-import com.example.NewsFeed.repository.UsersRepository;
 import com.example.NewsFeed.service.PostsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 public class PostsController {
 
     private final PostsService postsService;
-    private final UsersRepository usersRepository;
 
     @PostMapping
     public ResponseEntity<CreatePostsResponseDto> createPost(@Valid @RequestBody CreatePostsRequestDto createPostsRequestDto,
