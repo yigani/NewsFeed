@@ -7,6 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class FollowRequestDto {
 
-    private Long fromUserId;
     private Long toUserId;
 }

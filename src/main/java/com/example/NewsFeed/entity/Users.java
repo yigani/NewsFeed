@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.List;
 
@@ -58,8 +60,8 @@ public class Users extends BaseEntity{
         this.isDelete = false; // 기본값으로 false 설정
     }
 
-    public void updatePassword(UpdatePasswordRequestDto dto) {
-        this.password = dto.getNewPassword();
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
     }
 
     public void deactivateUser() {

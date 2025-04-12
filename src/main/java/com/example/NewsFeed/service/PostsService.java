@@ -1,14 +1,17 @@
 package com.example.NewsFeed.service;
 
 import com.example.NewsFeed.dto.posts.*;
-import com.example.NewsFeed.entity.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PostsService {
-    CreatePostsResponseDto create(CreatePostsRequestDto createPostsRequestDto, Users users);
+    CreatePostsResponseDto create(CreatePostsRequestDto createPostsRequestDto, Long userId);
+
     FindByIdPostsResponseDto findById(Long id);
-    UpdatePostsResponseDto updateById(UpdatePostsRequestDto updatePostsRequestDto, Long id);
-    void deleteById(Long id);
+
+    UpdatePostsResponseDto updateById(UpdatePostsRequestDto updatePostsRequestDto, Long id, Long userId);
+
+    void deleteById(Long id, Long userId);
+
     Page<PasingPostsResponseDto> getNewsFeed(Pageable pageable);
 }
