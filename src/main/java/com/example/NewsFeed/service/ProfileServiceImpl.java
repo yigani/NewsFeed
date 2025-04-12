@@ -1,5 +1,6 @@
 package com.example.NewsFeed.service;
 
+import com.example.NewsFeed.consts.Const;
 import com.example.NewsFeed.dto.profiles.MyProfileUpdateRequestDto;
 import com.example.NewsFeed.dto.profiles.MyProfileUpdateResponseDto;
 import com.example.NewsFeed.dto.profiles.ProfileResponseDto;
@@ -7,9 +8,11 @@ import com.example.NewsFeed.entity.Profiles;
 import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.repository.ProfilesRepository;
 import com.example.NewsFeed.repository.UsersRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.bind.annotation.SessionAttribute;
+@Slf4j
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
@@ -41,13 +44,14 @@ public class ProfileServiceImpl implements ProfileService {
     // 로그인 된 유저의 프로필 수정
     @Override
     @Transactional
-    public MyProfileUpdateResponseDto updateProfile(Long userId, MyProfileUpdateRequestDto requestDto) {
+    public MyProfileUpdateResponseDto updateProfile(@SessionAttribute(name = Const.LOGIN_USER) Long userId, MyProfileUpdateRequestDto requestDto) {
 
         Users user = usersRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("프로필이 생성되지 않았습니다."));
 
         Profiles profile = profilesRepository.findByUserId(user)
                 .orElseThrow(() -> new IllegalArgumentException("프로필이 생성되지 않았습니다."));
+
 
         user.updateUserName(requestDto.getUsers().getUsername());
 

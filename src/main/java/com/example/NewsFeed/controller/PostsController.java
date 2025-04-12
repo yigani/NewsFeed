@@ -2,7 +2,6 @@ package com.example.NewsFeed.controller;
 
 import com.example.NewsFeed.consts.Const;
 import com.example.NewsFeed.dto.posts.*;
-import com.example.NewsFeed.repository.UsersRepository;
 import com.example.NewsFeed.service.PostsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +64,7 @@ public class PostsController {
     }
 
     @GetMapping("/newsfeed")
-    public Page<PasingPostsResponseDto> getNewsFeed(@PageableDefault(size = 10, sort = "updateAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public Page<PasingPostsResponseDto> getNewsFeed(@PageableDefault(size = 10, sort = "createAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return postsService.getNewsFeed(pageable);
     }
 }

@@ -6,6 +6,7 @@ import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.repository.ProfilesRepository;
 import com.example.NewsFeed.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
@@ -59,10 +61,13 @@ public class UsersServiceImpl implements UsersService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        if (!findUser.getPassword().equals(dto.getPassword())) {
+
+        if (!passwordEncoder.matches(dto.getPassword(), findUser.getPassword())) {
 
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
         }
+
         findUser.updatePassword(encodedNewPassword);
 
     }
@@ -74,8 +79,10 @@ public class UsersServiceImpl implements UsersService {
 
         Users findUser = usersRepository.findUsersByIdOrElseThrow(id);
 
-        if (!passwordEncoder.matches(findUser.getPassword(), dto.getPassword())) {
+        if (!passwordEncoder.matches(dto.getPassword(), findUser.getPassword())) {
+
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
         }
 
         findUser.deactivateUser();
