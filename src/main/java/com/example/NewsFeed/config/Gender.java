@@ -1,8 +1,10 @@
 package com.example.NewsFeed.config;
 
+// 성별 상수 설정 클래스
 public enum Gender {
    M, F;
 
+   // 성별 입력 확인
    public static Gender fromInt(int gender) {
        if (gender == 1) {
            return M;

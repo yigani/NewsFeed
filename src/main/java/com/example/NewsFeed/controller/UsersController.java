@@ -18,9 +18,7 @@ public class UsersController {
 
     private final UsersService usersService;
 
-    /**
-     * 회원 가입(유저 생성)
-     */
+    // 회원 가입 (유저 생성)
     @PostMapping("/signup")
     public ResponseEntity<SignUpUserResponseDto> signUp(@Valid @RequestBody SignUpUserRequestDto dto) {
 
@@ -29,9 +27,7 @@ public class UsersController {
         return new ResponseEntity<>(signUpUser, HttpStatus.CREATED);
     }
 
-    /**
-     * 프로필 생성
-     */
+    // 로그인 된 유저 프로필 생성
     @PostMapping("/profile")
     public ResponseEntity<CreateProfileResponseDto> createProfile(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody CreateProfileRequestDto dto) {
 
@@ -40,9 +36,7 @@ public class UsersController {
         return new ResponseEntity<>(createdProfile, HttpStatus.CREATED);
     }
 
-    /**
-     * 비밀번호 변경
-     */
+    // 로그인 된 유저 비밀번호 변경
     @PatchMapping("/password")
     public ResponseEntity<Void> updatePassword(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody UpdatePasswordRequestDto dto) {
 
@@ -51,9 +45,7 @@ public class UsersController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /**
-     * 회원 탈퇴
-     */
+    // 로그인 된 유저 탈퇴
     @PatchMapping("/me/status")
     public ResponseEntity<DeactivateUserResponseDto> deactivateUser(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody DeactivateUserRequestDto dto) {
 
@@ -62,23 +54,21 @@ public class UsersController {
         return new ResponseEntity<>(deactivateUserResponseDto, HttpStatus.OK);
     }
 
-
-
-    // TODO 로그인 구현 후 수정 필요
+    // 로그인 된 유저 이름, 이메일(민감한 정보) 조회
     @GetMapping("/info/me")
     public ResponseEntity<UserResponseDto> myUserInfo(@SessionAttribute(name = Const.LOGIN_USER) Long id) {
         UserResponseDto userResponseDto = usersService.myUserInfo(id);
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
-    // 특정 유저 이름 조회
+    // id로 유저 이름 조회
     @GetMapping("/info/{id}")
     public ResponseEntity<UserInfoResponseDto> userInfo(@PathVariable Long id) {
         UserInfoResponseDto userInfoResponseDto = usersService.userInfo(id);
         return new ResponseEntity<>(userInfoResponseDto, HttpStatus.OK);
     }
 
-    //유저 검색
+    // 유저명으로 유저 검색
     @GetMapping
     public ResponseEntity<List<UserSearchResponseDto>> searchUser(@RequestParam("search") String name) {
 

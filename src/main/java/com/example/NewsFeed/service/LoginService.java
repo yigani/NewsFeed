@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface LoginService {
 
-    public Long handleLogin(LoginRequestDto dto);
+    Long handleLogin(LoginRequestDto dto);
 
 }

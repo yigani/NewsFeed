@@ -17,24 +17,22 @@ public class ProfilesController {
 
     private final ProfileServiceImpl profileService;
 
-    //프로필 조회
+    // id로 유저 프로필 조회
     @GetMapping("/{id}/profile")
-    public ResponseEntity<ProfileResponseDto> userProfile(@PathVariable Long id){
+    public ResponseEntity<ProfileResponseDto> userProfile(@PathVariable Long id) {
         ProfileResponseDto profileResponseDto = profileService.userProfile(id);
         return new ResponseEntity<>(profileResponseDto, HttpStatus.OK);
     }
 
-    // TODO 로그인 구현 후 수정 필요
-    //내 프로필 수정
-    //테스트를 위해 PathVariable로 아이디 값을 넣어서 확인
-    //로그인 구현시 userId부분 "/me"로 수정필요
+
+    // 로그인된 유저 프로필 수정
     @PatchMapping("/me")
     public ResponseEntity<MyProfileUpdateResponseDto> updateProfile(
             @SessionAttribute(name = Const.LOGIN_USER) Long userId,
             @RequestBody MyProfileUpdateRequestDto myprofileUpdate
-    ){
+    ) {
         MyProfileUpdateResponseDto responseDto = profileService.updateProfile(userId, myprofileUpdate);
-        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
 }
