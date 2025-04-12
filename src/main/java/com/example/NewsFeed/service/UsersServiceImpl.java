@@ -10,6 +10,8 @@ import com.example.NewsFeed.entity.Profiles;
 import com.example.NewsFeed.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,11 +25,14 @@ public class UsersServiceImpl implements UsersService{
 
     private final UsersRepository usersRepository;
     private final ProfilesRepository profilesRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    //TODO 암호화 확인 필요
     @Override
     public SignUpUserResponseDto signUp(SignUpUserRequestDto dto) {
 
-        Users savedUser = new Users(dto);
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        Users savedUser = new Users(dto.getEmail(), encodedPassword , dto.getUsername());
         usersRepository.save(savedUser);
 
         return new SignUpUserResponseDto(savedUser);
@@ -50,15 +55,19 @@ public class UsersServiceImpl implements UsersService{
 
         Users findUser = usersRepository.findUsersByIdOrElseThrow(id);
 
-        if(dto.getPassword().equals(dto.getNewPassword())){
+        String encodedNewPassword = passwordEncoder.encode(dto.getNewPassword());
+
+        if(dto.getPassword().equals(dto.getNewPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
         if(!findUser.getPassword().equals(dto.getPassword())) {
+
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
 
-        findUser.updatePassword(dto);
+
+        findUser.updatePassword(encodedNewPassword);
 
     }
 
@@ -68,7 +77,8 @@ public class UsersServiceImpl implements UsersService{
 
         Users findUser = usersRepository.findUsersByIdOrElseThrow(id);
 
-        if(!findUser.getPassword().equals(dto.getPassword())){
+
+        if(!passwordEncoder.matches(findUser.getPassword(), dto.getPassword())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
 

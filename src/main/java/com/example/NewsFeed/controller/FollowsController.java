@@ -1,6 +1,8 @@
 package com.example.NewsFeed.controller;
 
 import com.example.NewsFeed.dto.follows.FollowRequestDto;
+import com.example.NewsFeed.consts.Const;
+import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.repository.FollowsRepository;
 import com.example.NewsFeed.service.FollowsService;
 import org.springframework.http.HttpStatus;
@@ -21,23 +23,21 @@ public class FollowsController {
         this.followsService = followsService;
     }
 
-    // TODO팔로우랑 언팔로우는 로그인 기능 생기면 수정해야될것같습니다.
-
     //팔로우
     @PostMapping("/follow")
-    public ResponseEntity<String> follow(@RequestBody FollowRequestDto followRequestDto){
-        followsService.follow(followRequestDto.getFromUserId(),followRequestDto.getToUserId());
+    public ResponseEntity<String> follow(@SessionAttribute(required = false, name = Const.LOGIN_USER) Users users, @RequestBody FollowRequestDto followRequestDto){
+        followsService.follow(users.getId(),followRequestDto.getToUserId());
         return new ResponseEntity<>("팔로우 성공",HttpStatus.OK);
     }
 
     //로그인 기능 생기면 수정
     //언팔
     @DeleteMapping("/unfollow")
-    public ResponseEntity<String> unfollow(@RequestBody FollowRequestDto followRequestDto){
-        followsService.unfollow(followRequestDto.getFromUserId(),followRequestDto.getToUserId());
+    public ResponseEntity<String> unfollow(@SessionAttribute(required = false,name = Const.LOGIN_USER) Users users, @RequestBody FollowRequestDto followRequestDto){
+
+        followsService.unfollow(users.getId(),followRequestDto.getToUserId());
         return new ResponseEntity<>("언팔 성공",HttpStatus.OK);
     }
-
 
 
     //목록조회
@@ -67,3 +67,4 @@ public class FollowsController {
     }
 
 }
+

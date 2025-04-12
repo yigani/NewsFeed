@@ -1,5 +1,6 @@
 package com.example.NewsFeed.controller;
 
+import com.example.NewsFeed.consts.Const;
 import com.example.NewsFeed.dto.users.*;
 import com.example.NewsFeed.service.UsersService;
 import jakarta.validation.Valid;
@@ -32,7 +33,7 @@ public class UsersController {
      * 프로필 생성
      */
     @PostMapping("/profile")
-    public ResponseEntity<CreateProfileResponseDto> createProfile(@RequestParam Long id, @Valid @RequestBody CreateProfileRequestDto dto) {
+    public ResponseEntity<CreateProfileResponseDto> createProfile(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody CreateProfileRequestDto dto) {
 
         CreateProfileResponseDto createdProfile = usersService.createProfile(id, dto);
 
@@ -43,7 +44,7 @@ public class UsersController {
      * 비밀번호 변경
      */
     @PatchMapping("/password")
-    public ResponseEntity<Void> updatePassword(@RequestParam Long id, @Valid @RequestBody UpdatePasswordRequestDto dto) {
+    public ResponseEntity<Void> updatePassword(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody UpdatePasswordRequestDto dto) {
 
         usersService.updatePassword(id, dto);
 
@@ -54,7 +55,7 @@ public class UsersController {
      * 회원 탈퇴
      */
     @PatchMapping("/me/status")
-    public ResponseEntity<DeactivateUserResponseDto> deactivateUser(@RequestParam Long id, @Valid @RequestBody DeactivateUserRequestDto dto) {
+    public ResponseEntity<DeactivateUserResponseDto> deactivateUser(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody DeactivateUserRequestDto dto) {
 
         DeactivateUserResponseDto deactivateUserResponseDto = usersService.deactivateUser(id, dto);
 
@@ -65,7 +66,7 @@ public class UsersController {
 
     // TODO 로그인 구현 후 수정 필요
     @GetMapping("/info/me")
-    public ResponseEntity<UserResponseDto> myUserInfo(@RequestParam Long id) {
+    public ResponseEntity<UserResponseDto> myUserInfo(@SessionAttribute(name = Const.LOGIN_USER) Long id) {
         UserResponseDto userResponseDto = usersService.myUserInfo(id);
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
