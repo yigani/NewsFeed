@@ -2,15 +2,17 @@ package com.example.NewsFeed.controller;
 
 import com.example.NewsFeed.consts.Const;
 import com.example.NewsFeed.dto.users.*;
+import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.service.UsersService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Slf4j
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -35,6 +37,7 @@ public class UsersController {
     @PostMapping("/profile")
     public ResponseEntity<CreateProfileResponseDto> createProfile(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody CreateProfileRequestDto dto) {
 
+
         CreateProfileResponseDto createdProfile = usersService.createProfile(id, dto);
 
         return new ResponseEntity<>(createdProfile, HttpStatus.CREATED);
@@ -44,9 +47,13 @@ public class UsersController {
      * 비밀번호 변경
      */
     @PatchMapping("/password")
-    public ResponseEntity<Void> updatePassword(@SessionAttribute(name = Const.LOGIN_USER) Long id, @Valid @RequestBody UpdatePasswordRequestDto dto) {
+    public ResponseEntity<Void> updatePassword(@SessionAttribute(name = Const.LOGIN_USER) Users users, @Valid @RequestBody UpdatePasswordRequestDto dto) {
 
-        usersService.updatePassword(id, dto);
+        //세션 테스트
+
+
+
+        usersService.updatePassword(users.getId(), dto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

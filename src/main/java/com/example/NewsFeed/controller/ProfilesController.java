@@ -6,10 +6,11 @@ import com.example.NewsFeed.dto.profiles.MyProfileUpdateResponseDto;
 import com.example.NewsFeed.dto.profiles.ProfileResponseDto;
 import com.example.NewsFeed.service.ProfileServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@Slf4j
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -33,6 +34,7 @@ public class ProfilesController {
             @SessionAttribute(name = Const.LOGIN_USER) Long userId,
             @RequestBody MyProfileUpdateRequestDto myprofileUpdate
     ){
+        log.info("✅ 암호화 코드{}",userId);
         MyProfileUpdateResponseDto responseDto = profileService.updateProfile(userId, myprofileUpdate);
         return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }

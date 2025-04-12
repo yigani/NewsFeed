@@ -1,16 +1,13 @@
 package com.example.NewsFeed.service;
 
-import com.example.NewsFeed.dto.users.UserInfoResponseDto;
-import com.example.NewsFeed.dto.users.UserResponseDto;
-import com.example.NewsFeed.dto.users.UserSearchResponseDto;
-import com.example.NewsFeed.entity.Users;
-import com.example.NewsFeed.repository.ProfilesRepository;
 import com.example.NewsFeed.dto.users.*;
 import com.example.NewsFeed.entity.Profiles;
+import com.example.NewsFeed.entity.Users;
+import com.example.NewsFeed.repository.ProfilesRepository;
 import com.example.NewsFeed.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService{
@@ -41,6 +38,7 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public CreateProfileResponseDto createProfile(Long id, CreateProfileRequestDto dto) {
 
+
         Users findUser = usersRepository.findUsersByIdOrElseThrow(id);
 
         Profiles savedProfile = new Profiles(findUser, dto);
@@ -61,11 +59,12 @@ public class UsersServiceImpl implements UsersService{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        if(!findUser.getPassword().equals(dto.getPassword())) {
+
+        if (!passwordEncoder.matches(dto.getPassword(), findUser.getPassword())) {
 
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        }
 
+        }
 
         findUser.updatePassword(encodedNewPassword);
 
