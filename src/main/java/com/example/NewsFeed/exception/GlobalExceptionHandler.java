@@ -44,5 +44,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 
-    // ResponseStatusException
+    // 로그인된 유저에게 접근 권한이 없을 때 예외처리
+    // 반환 값: 메세지
+    @ExceptionHandler(NotLoginUserException.class)
+    public ResponseEntity<String> invalidInputException(NotLoginUserException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
 }

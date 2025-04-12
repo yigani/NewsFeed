@@ -3,6 +3,7 @@ package com.example.NewsFeed.service;
 import com.example.NewsFeed.dto.posts.*;
 import com.example.NewsFeed.entity.Posts;
 import com.example.NewsFeed.entity.Users;
+import com.example.NewsFeed.exception.NotLoginUserException;
 import com.example.NewsFeed.repository.PostsRepository;
 import com.example.NewsFeed.repository.UsersRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -40,25 +41,35 @@ public class PostsServiceImpl implements PostsService {
         return findByIdPostsResponseDto;
     }
 
-    // id로 게시글을 찾아서 수정
+    // id로 조회한 게시글이 로그인된 유저의 게시글이 맞다면 수정
     @Override
-    public UpdatePostsResponseDto updateById(UpdatePostsRequestDto updatePostsRequestDto, Long id) {
+    public UpdatePostsResponseDto updateById(UpdatePostsRequestDto updatePostsRequestDto, Long id, Users users) {
         // id에 맞는 posts 조회
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
+        if (posts.getUser().getId().equals(users.getId())) {
+            throw new NotLoginUserException("타인의 게시글은 수정할 수 없습니다.");
+        }
         // 조회한 posts에 requestDto 저장
         posts.update(updatePostsRequestDto);
         Posts updatePosts = postsRepository.save(posts);
+
         return new UpdatePostsResponseDto(updatePosts);
     }
 
-    // id로 게시글을 찾아서 삭제
+    // id로 조회한 게시글이 로그인된 유저의 게시글이 맞다면 삭제
     @Override
-    public void deleteById(Long id) {
-        // postsRepository에 id가 없다면 예외처리
-        if(!postsRepository.existsById(id)) {
-            throw new EntityNotFoundException("게시글을 찾을 수 없습니다.");
-        }
+    public void deleteById(Long id, Users users) {
+//        // postsRepository에 id가 없다면 예외처리
+//        if (!postsRepository.existsById(id)) {
+//            throw new EntityNotFoundException("게시글을 찾을 수 없습니다.");
+//        }
+
+
+//        Posts posts = postsRepository.findById(id)
+//                .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
+//        if (posts.getUser().getId().equals(users))
+
         // postsRepository에서 id가 있는 행을 삭제
         postsRepository.deleteById(id);
     }

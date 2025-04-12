@@ -42,8 +42,8 @@ public class PostsController {
     // TODO 인증 인가 필요 / 로그인된 유저 게시글 중 원하는 게시글 id를 기준으로 게시글 수정으로 변경
     // 게시글 id로 게시글을 찾아서 게시글을 수정
     @PatchMapping("/{postId}")
-    public ResponseEntity<UpdatePostsResponseDto> updatePostById(@Valid @RequestBody UpdatePostsRequestDto updatePostsRequestDto,@SessionAttribute(name = Const.LOGIN_USER) Long postId) {
-        UpdatePostsResponseDto updatePostsResponseDto = postsService.updateById(updatePostsRequestDto, postId);
+    public ResponseEntity<UpdatePostsResponseDto> updatePostById(@Valid @RequestBody UpdatePostsRequestDto updatePostsRequestDto, @PathVariable Long postId, @SessionAttribute(name = Const.LOGIN_USER) Users users) {
+        UpdatePostsResponseDto updatePostsResponseDto = postsService.updateById(updatePostsRequestDto, postId, users);
         return new ResponseEntity<>(updatePostsResponseDto, HttpStatus.OK);
     }
 
