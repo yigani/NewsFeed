@@ -36,12 +36,6 @@ public class Users extends BaseEntity {
 
     private boolean isDelete;
 
-    @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
-    private List<Follows> followings;
-
-    @OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
-    private List<Follows> followers;
-
     public Users(SignUpUserRequestDto dto) {
         this.email = dto.getEmail();
         this.password = dto.getPassword();

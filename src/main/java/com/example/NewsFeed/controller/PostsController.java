@@ -26,7 +26,7 @@ public class PostsController {
     public ResponseEntity<CreatePostsResponseDto> createPost(@Valid @RequestBody CreatePostsRequestDto createPostsRequestDto,
                                                              @SessionAttribute(name = Const.LOGIN_USER) Long userId) {
         CreatePostsResponseDto createPostsResponseDto = postsService.create(createPostsRequestDto, userId);
-        return new ResponseEntity<>(createPostsResponseDto, HttpStatus.OK);
+        return new ResponseEntity<>(createPostsResponseDto, HttpStatus.CREATED);
     }
 
     // 게시글 id로 게시글 단건 조회

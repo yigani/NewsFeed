@@ -2,8 +2,10 @@ package com.example.NewsFeed.service;
 
 import com.example.NewsFeed.entity.Follows;
 import com.example.NewsFeed.entity.Users;
+import com.example.NewsFeed.exception.DeletedUserException;
 import com.example.NewsFeed.repository.FollowsRepository;
 import com.example.NewsFeed.repository.UsersRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class FollowsServiceImpl implements FollowsService {
             throw new IllegalArgumentException("자기 자신을 팔로우할 수 없습니다.");
         }
 
+
         Users fromUser = usersRepository.findById(fromUserId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
         Users toUser = usersRepository.findById(toUserId)
@@ -37,6 +40,10 @@ public class FollowsServiceImpl implements FollowsService {
 
         if (followsRepository.existsByFollowerAndFollowing(fromUser, toUser)) {
             throw new IllegalArgumentException("이미 팔로우한 유저입니다.");
+        }
+
+        if (toUser.isDelete()) {
+            throw new DeletedUserException("해당 유저는 존재하지 않습니다.");
         }
 
         Follows follow = new Follows(fromUser, toUser);
@@ -58,6 +65,10 @@ public class FollowsServiceImpl implements FollowsService {
         Follows follow = followsRepository.findByFollowerAndFollowing(fromUser, toUser)
                 .orElseThrow(() -> new IllegalArgumentException("팔로우 관계가 존재하지 않습니다."));
 
+        if (toUser.isDelete()) {
+            throw new DeletedUserException("해당 유저는 존재하지 않습니다.");
+        }
+
         followsRepository.delete(follow);
     }
 
@@ -68,7 +79,7 @@ public class FollowsServiceImpl implements FollowsService {
         Users user = usersRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
 
-        List<Follows> following = followsRepository.findByFollower(user);
+        List<Follows> following = followsRepository.findByFollowerAndFollowingIsDeleteFalse(user);
         Set<Long> names = new HashSet<>();
         List<String> followingUserName = new ArrayList<>();
 
@@ -88,7 +99,7 @@ public class FollowsServiceImpl implements FollowsService {
         Users user = usersRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
 
-        List<Follows> follower = followsRepository.findByFollowing(user);
+        List<Follows> follower = followsRepository.findByFollowingAndFollowerIsDeleteFalse(user);
         Set<Long> names = new HashSet<>();
         List<String> followerUserName = new ArrayList<>();
 
@@ -106,7 +117,7 @@ public class FollowsServiceImpl implements FollowsService {
     public int followingCount(Long userId) {
         Users users = usersRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
-        return followsRepository.countByFollower(users);
+        return followsRepository.countByFollowerAndFollowingIsDeleteFalse(users);
     }
 
     // 팔로워 유저 숫자 조회
@@ -114,6 +125,6 @@ public class FollowsServiceImpl implements FollowsService {
     public int followerCount(Long userId) {
         Users users = usersRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
-        return followsRepository.countByFollowing(users);
+        return followsRepository.countByFollowingAndFollowerIsDeleteFalse(users);
     }
 }

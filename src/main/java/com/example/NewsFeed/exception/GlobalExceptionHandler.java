@@ -48,4 +48,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> invalidInputException(NotLoginUserException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
+
+    // 탈퇴한 유저에 접근 할 경우 예외처리
+    // 반환 값: 메세지
+    @ExceptionHandler(DeletedUserException.class)
+    public ResponseEntity<String> invalidInputException(DeletedUserException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    }
 }
