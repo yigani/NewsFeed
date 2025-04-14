@@ -12,11 +12,21 @@
 | 심재민 | Posts | 게시글 생성 수정 삭제 단건조회, 전체 예외 처리                   |
 
 ## 🧱 ERD
-사진추가
+![](https://velog.velcdn.com/images/deabaind/post/c3c2d35a-dcbe-4a00-880a-ad8b18b5cfaa/image.png)
 
 ## 📑 API 명세서
-최종 점검 후 추가
 
+### 👤 Users
+![](https://velog.velcdn.com/images/deabaind/post/c1061024-b37d-4fce-b8ab-54267c26bee7/image.png)
+
+### 👔 Profiles
+![](https://velog.velcdn.com/images/deabaind/post/b1cda616-03b1-47fe-a35f-00531c71321a/image.png)
+
+### 📑 Posts
+![](https://velog.velcdn.com/images/deabaind/post/bbfd12e5-a107-45ab-b503-5d0ca92fe1e3/image.png)
+
+### 👥 Follows
+![](https://velog.velcdn.com/images/deabaind/post/317648d6-bd85-41f3-8229-3d329775f7d8/image.png)
 
 ## 🛠 기술 스택
 <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
