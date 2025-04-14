@@ -42,5 +42,4 @@ public class LoginController {
 
         return ResponseEntity.ok("로그아웃 성공");
     }
-
 }

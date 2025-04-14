@@ -9,5 +9,4 @@ public class UserSearchResponseDto {
 
     private final Long id;
     private final String userName;
-
 }

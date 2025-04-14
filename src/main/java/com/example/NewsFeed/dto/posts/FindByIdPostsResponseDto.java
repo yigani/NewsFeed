@@ -26,5 +26,4 @@ public class FindByIdPostsResponseDto {
         this.createAt = posts.getCreateAt();
         this.updateAt = posts.getUpdateAt();
     }
-
 }

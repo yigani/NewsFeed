@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -24,7 +23,6 @@ public class Profiles {
     @JoinColumn(name = "user_id")
     private Users userId;
 
-    // TODO 이넘 수정 진행중
     private Gender gender;
 
     @Size(max = 100)
@@ -36,7 +34,7 @@ public class Profiles {
     private String image;
 
     private LocalDate birthday;
-    
+
     public Profiles(Users users, CreateProfileRequestDto dto) {
         this.gender = dto.getGender();
         this.introduction = dto.getIntroduction();
@@ -45,11 +43,10 @@ public class Profiles {
         this.userId = users;
     }
 
-    public void updateProfile(Gender gender,String introduction,String image, LocalDate birthday){
+    public void updateProfile(Gender gender, String introduction, String image, LocalDate birthday) {
         this.gender = gender;
         this.introduction = introduction;
         this.image = image;
         this.birthday = birthday;
-
     }
 }

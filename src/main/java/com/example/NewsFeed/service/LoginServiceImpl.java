@@ -1,18 +1,13 @@
 package com.example.NewsFeed.service;
 
-
 import com.example.NewsFeed.dto.login.LoginRequestDto;
-import com.example.NewsFeed.dto.users.SignUpUserRequestDto;
 import com.example.NewsFeed.entity.Users;
 import com.example.NewsFeed.exception.InvalidCredentialException;
 import com.example.NewsFeed.repository.UsersRepository;
-import com.fasterxml.jackson.core.JsonPointer;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +26,7 @@ public class LoginServiceImpl implements LoginService {
                 () -> new InvalidCredentialException("해당 아이디가 존재하지 않습니다."));
 
         if (user.isDelete()) {
-           throw new InvalidCredentialException("존재하지 않는 회원입니다.");
+            throw new InvalidCredentialException("존재하지 않는 회원입니다.");
         }
 
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
@@ -39,5 +34,4 @@ public class LoginServiceImpl implements LoginService {
         }
         return user.getId();
     }
-
 }

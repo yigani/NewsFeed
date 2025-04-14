@@ -9,15 +9,22 @@ import java.util.Optional;
 
 public interface FollowsRepository extends JpaRepository<Follows, Long> {
 
-    List<Follows> findByFollower(Users follower);
+    // user가 팔로잉한 목록을 조회할 때 isDelete가 False인 유저만 조회
+    List<Follows> findByFollowerAndFollowingIsDeleteFalse(Users follower);
 
-    List<Follows> findByFollowing(Users following);
+    // user의 팔로워 목록을 조회할 때 isDelete가 False인 유저만 조회
+    List<Follows> findByFollowingAndFollowerIsDeleteFalse(Users following);
 
+    // 팔로우 생성
     boolean existsByFollowerAndFollowing(Users follower, Users following);
 
+    // 팔로우 삭제
     Optional<Follows> findByFollowerAndFollowing(Users follower, Users following);
 
-    int countByFollower(Users user);
+    // user가 팔로잉한 유저의 수를 조회할 때 isDelete가 False인 유저만 조회
+    int countByFollowerAndFollowingIsDeleteFalse(Users user);
 
-    int countByFollowing(Users user);
+    // user를 팔로잉한 유저의 수를 조회할 때 isDelete가 False인 유저만 조회
+    int countByFollowingAndFollowerIsDeleteFalse(Users user);
+
 }

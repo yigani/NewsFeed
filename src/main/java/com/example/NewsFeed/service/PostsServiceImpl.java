@@ -3,14 +3,15 @@ package com.example.NewsFeed.service;
 import com.example.NewsFeed.dto.posts.*;
 import com.example.NewsFeed.entity.Posts;
 import com.example.NewsFeed.entity.Users;
+import com.example.NewsFeed.exception.DeletedUserException;
 import com.example.NewsFeed.exception.NotLoginUserException;
 import com.example.NewsFeed.repository.PostsRepository;
 import com.example.NewsFeed.repository.UsersRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +40,9 @@ public class PostsServiceImpl implements PostsService {
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
         Users users = usersRepository.findById(posts.getUser().getId())
                 .orElseThrow(() -> new EntityNotFoundException("게시글 작성자를 찾을 수 없습니다."));
+        if (users.isDelete()) {
+            throw new DeletedUserException("게시글을 찾을 수 없습니다.");
+        }
         return new FindByIdPostsResponseDto(posts, users.getUserName());
     }
 
@@ -48,6 +52,13 @@ public class PostsServiceImpl implements PostsService {
 
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
+
+        Users users = usersRepository.findById(posts.getUser().getId())
+                .orElseThrow(() -> new EntityNotFoundException("게시글 작성자를 찾을 수 없습니다."));
+
+        if (users.isDelete()) {
+            throw new DeletedUserException("게시글을 찾을 수 없습니다.");
+        }
 
         if (!posts.getUser().getId().equals(userId)) {
             throw new NotLoginUserException("타인의 게시글은 수정할 수 없습니다.");
@@ -63,6 +74,13 @@ public class PostsServiceImpl implements PostsService {
 
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
+
+        Users users = usersRepository.findById(posts.getUser().getId())
+                .orElseThrow(() -> new EntityNotFoundException("게시글 작성자를 찾을 수 없습니다."));
+
+        if (users.isDelete()) {
+            throw new DeletedUserException("게시글을 찾을 수 없습니다.");
+        }
 
         if (!posts.getUser().getId().equals(userId)) {
             throw new NotLoginUserException("타인의 게시글은 삭제할 수 없습니다.");

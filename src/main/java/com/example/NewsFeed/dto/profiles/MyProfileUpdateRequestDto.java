@@ -10,28 +10,21 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class MyProfileUpdateRequestDto {
 
-    //음... 이미 username과 userprofile을 받아오는 dto가 있는데 따로 생성해야할까?
-    //내일 튜터님께 질문해보기
     private final UserName users;
     private final UserProfile profiles;
 
     @Getter
     @RequiredArgsConstructor
-    public static class UserName{
-
+    public static class UserName {
         private final String username;
-
     }
 
     @Getter
     @RequiredArgsConstructor
-    public static class UserProfile{
-
+    public static class UserProfile {
         private final Gender gender;
         private final LocalDate birthday;
         private final String introduction;
         private final String image;
-
     }
-
 }

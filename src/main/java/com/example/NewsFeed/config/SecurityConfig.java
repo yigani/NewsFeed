@@ -19,7 +19,6 @@ public class SecurityConfig {
                 // 모든 HTTP 요청 인증 없이 허용 (LoginFilter에서 해결)
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
-
                 )
                 .build();
     }

@@ -1,23 +1,17 @@
 package com.example.NewsFeed.entity;
 
 import com.example.NewsFeed.dto.users.SignUpUserRequestDto;
-import com.example.NewsFeed.dto.users.UpdatePasswordRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
-import java.util.List;
 
 @Getter
 @Entity
 @NoArgsConstructor
 @Table(name = "users")
-public class Users extends BaseEntity{
+public class Users extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,12 +33,6 @@ public class Users extends BaseEntity{
     private String userName;
 
     private boolean isDelete;
-
-    @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
-    private List<Follows> followings;
-
-    @OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
-    private List<Follows> followers;
 
     public Users(SignUpUserRequestDto dto) {
         this.email = dto.getEmail();
@@ -68,8 +56,7 @@ public class Users extends BaseEntity{
         this.isDelete = true;
     }
 
-    public void updateUserName(String userName){
+    public void updateUserName(String userName) {
         this.userName = userName;
     }
-
 }

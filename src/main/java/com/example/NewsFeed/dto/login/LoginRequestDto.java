@@ -18,5 +18,4 @@ public class LoginRequestDto {
         this.email = email;
         this.password = password;
     }
-
 }

@@ -22,7 +22,7 @@ public class Follows {
     @JoinColumn(nullable = false, name = "following")
     private Users following;
 
-    public Follows(Users follower, Users following){
+    public Follows(Users follower, Users following) {
         this.follower = follower;
         this.following = following;
     }
